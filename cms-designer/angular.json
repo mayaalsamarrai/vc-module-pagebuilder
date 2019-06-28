@@ -103,7 +103,6 @@
                             "extractLicenses": true,
                             "vendorChunk": false,
                             "buildOptimizer": false,
-                            "baseHref": "/admin/designer/",
                             "resourcesOutputPath": "assets",
                             "watch": true
                         },

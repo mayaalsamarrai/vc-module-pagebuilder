@@ -2,7 +2,7 @@
     "storeBaseUrl": "http://localhost:2082",
     "storePreviewPath": "/designer-preview",
     "contentCssPath": "/themes/assets/style.min.css",
-    "baseUrl": "/admin/designer/",
-    "platformUrl": "http://localhost/admin",
+    "baseUrl": "/designer/",
+    "platformUrl": null,
     "tokenUrl": "/token"
 }

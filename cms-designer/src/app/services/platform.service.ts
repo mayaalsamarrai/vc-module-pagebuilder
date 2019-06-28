@@ -44,8 +44,14 @@ export class PlatformService {
             tap(x => {
                 Object.assign(AppSettings, x);
                 if (!AppSettings.platformUrl) {
-                    AppSettings.platformUrl = this.windowRef.nativeWindow.location.origin + '/';
+                    if (AppSettings.baseUrl) {
+                        const length = this.windowRef.nativeWindow.location.href.indexOf(AppSettings.baseUrl);
+                        AppSettings.platformUrl = this.windowRef.nativeWindow.location.href.substr(0, length);
+                    } else {
+                        AppSettings.platformUrl = this.windowRef.nativeWindow.location.origin;
+                    }
                 }
+                console.log(AppSettings);
             })
         ).toPromise();
     }
