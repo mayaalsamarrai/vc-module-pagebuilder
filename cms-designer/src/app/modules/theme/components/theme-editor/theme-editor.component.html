@@ -1,0 +1,21 @@
+<div class="list-group" data-name="sortable">
+    <a class="list-group-item" *ngIf="!noPresets" (click)="selectPresets()">
+        <div class="list-group-icon" data-name="presets"></div>
+        <div class="list-group-text">Presets</div>
+    </a>
+    <ng-container *ngIf="!noSchema && !noPresets">
+        <a class="list-group-item" *ngFor="let item of schema" (click)="selectItem(item)">
+            <div class="list-group-icon" [attr.data-name]="item.icon"></div>
+            <div class="list-group-text">{{ item.name }}</div>
+        </a>
+    </ng-container>
+
+    <div class="list-group-item" *ngIf="noPresets">
+        <div>Theme settings was not loaded</div>
+        <div><button (click)="onReloadData()">Try again</button></div>
+    </div>
+    <div class="list-group-item" *ngIf="!noPresets && noSchema">
+        <div>Theme schema was not loaded</div>
+        <div><button (click)="onReloadData()">Try again</button></div>
+    </div>
+</div>
