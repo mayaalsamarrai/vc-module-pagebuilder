@@ -22,6 +22,7 @@ bld/
 [Oo]bj/
 [Ll]og/
 builder/
+*.zip
 
 # Visual Studio 2015 cache/options directory
 .vs/
@@ -273,5 +274,3 @@ __pycache__/
 store/package-lock\.json
 
 store/dist/designer\.bundle\.js\.map
-
-VirtoCommerce\.PageBuilderModule/VirtoCommerce\.PageBuilderModule/Content/builder/

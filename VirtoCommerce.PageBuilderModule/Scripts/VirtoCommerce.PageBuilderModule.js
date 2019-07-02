@@ -29,43 +29,25 @@ angular.module(moduleTemplateName, [])
 .run(['$rootScope', 'platformWebApp.mainMenuService', 'platformWebApp.toolbarService', 'platformWebApp.widgetService', '$state',
     function ($rootScope, mainMenuService, toolbarService, widgetService, $state) {
         var addNewPageCommand = {
-            name: '',
-            icon: '',
+            name: 'platform.commands.add',
+            icon: 'fa fa-plus',
             executeMethod: function (blade) {
-
+                var newBlade = {
+                    id: 'listItemChild',
+                    title: 'content.blades.add-page.title',
+                    subtitle: 'content.blades.add-page.subtitle',
+                    controller: 'virtoCommerce.contentModule.pagesListController',
+                    template: 'Modules/$(VirtoCommerce.Content)/Scripts/blades/pages/page-add.tpl.html'
+                };
+                console.log('hello!!!');
+                //bladeNavigationService.showBlade(newBlade, blade);
             },
             canExecuteMethod: function (blade) {
                 return true;
-            }
+            },
+            permission: 'content:create'
         };
-        toolbarService.register(addNewPageCommand, '');
-        //var productResetCommand = {
-        //    name: "es.reset-cache.buttons.reset-cache", // localized name for button
-        //    icon: 'fa fa-eraser',
-        //    executeMethod: function (blade) {
-        //        moduleApi.resetProduct(blade.itemId).then(function () {
-        //            //alert("Кэш сброшен")
-        //        }).catch(function () {
-        //            //alert("Ошибка сброса кэша");
-        //        });
-        //    },
-        //    canExecuteMethod: function (blade) {
-        //        return true;
-        //    },
-        //    index: 101
-        //};
-        //toolbarService.register(productResetCommand, 'virtoCommerce.catalogModule.itemDetailController'); // second params is a blade name
 
-
-        //Register module in main menu
-        //var menuItem = {
-        //    path: 'browse/VirtoCommerce.PageBuilderModule',
-        //    icon: 'fa fa-cube',
-        //    title: 'VirtoCommerce.PageBuilderModule',
-        //    priority: 100,
-        //    action: function () { $state.go('workspace.VirtoCommerce.PageBuilderModule') },
-        //    permission: 'VirtoCommerce.PageBuilderModulePermission'
-        //};
-        //mainMenuService.addMenuItem(menuItem);
+        toolbarService.register(addNewPageCommand, 'virtoCommerce.contentModule.contentMainController');
     }
 ]);
