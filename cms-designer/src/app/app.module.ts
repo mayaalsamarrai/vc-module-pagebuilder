@@ -73,10 +73,10 @@ import { RefreshTokenInterceptor } from './services/refresh-token.interceptor';
         },
         {
             provide: PlatformService,
-            useFactory: (http: HttpClient, urls: ApiUrlsService, windowRef: WindowRef) => {
-                return new PlatformService(http, urls, windowRef);
+            useFactory: (http: HttpClient, urls: ApiUrlsService) => {
+                return new PlatformService(http, urls);
             },
-            deps: [ HttpClient, ApiUrlsService, WindowRef ]
+            deps: [ HttpClient, ApiUrlsService ]
         },
         {
             provide: PreviewService,

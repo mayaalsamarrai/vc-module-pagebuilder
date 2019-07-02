@@ -1,3 +1,4 @@
+import { ApiUrlsService } from 'src/app/services/api-url.service';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
@@ -9,15 +10,12 @@ import { AppSettings } from '@app/services';
 })
 export class FilesService {
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private urls: ApiUrlsService) { }
 
     uploadFile(file: File, name: string): Observable<string> {
-        const assetEndpoint = 'api/platform/assets';
-        const url = `${AppSettings.platformUrl}/${assetEndpoint}?folderUrl=blogs&name=${name}`;
+        const url = this.urls.generateUploadAssetUrl(name);
         const form = new FormData();
-
         form.append('uploadedFile', file, name);
-
         return this.http.post<FileDescriptor[]>(url, form).pipe(
             map(x => x[0].url)
         );

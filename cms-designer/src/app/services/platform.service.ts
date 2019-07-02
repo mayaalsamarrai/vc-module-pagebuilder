@@ -5,15 +5,14 @@ import { tap } from 'rxjs/operators';
 import { ApiUrlsService } from './api-url.service';
 import { PresetsModel } from '@themes/models';
 import { BlockValuesModel, BlocksSchema } from '@shared/models';
-import { EnvironmentSettings } from '@app/models';
-import { WindowRef } from './window-ref';
+import { PlatformSetting } from '@app/models';
 
 import { AppSettings } from './app.settings';
 
 @Injectable()
 export class PlatformService {
 
-    constructor(private http: HttpClient, private urls: ApiUrlsService, private windowRef: WindowRef) { }
+    constructor(private http: HttpClient, private urls: ApiUrlsService) { }
 
     downloadPreset<T>(filename: string): Observable<T> {
         return this.downloadModel<T>('themes', `/default/config/${filename}`);
@@ -40,18 +39,17 @@ export class PlatformService {
     }
 
     initSettings(): Promise<any> {
-        return this.http.get<EnvironmentSettings>('data/settings.json').pipe(
-            tap(x => {
-                Object.assign(AppSettings, x);
-                if (!AppSettings.platformUrl) {
-                    if (AppSettings.baseUrl) {
-                        const length = this.windowRef.nativeWindow.location.href.indexOf(AppSettings.baseUrl);
-                        AppSettings.platformUrl = this.windowRef.nativeWindow.location.href.substr(0, length);
-                    } else {
-                        AppSettings.platformUrl = this.windowRef.nativeWindow.location.origin;
-                    }
-                }
-                console.log(AppSettings);
+        const url = this.urls.generateSettingsUrl();
+        const parameters = {};
+        parameters['StoreBaseUrl'] = 'storeBaseUrl';
+        parameters['StorePreviewPath'] = 'storePreviewPath';
+        parameters['TokenUrl'] = 'tokenUrl';
+        return this.http.get<PlatformSetting[]>(url).pipe(
+            tap(settings => {
+                settings.forEach(x => {
+                    const key = x.name.replace('VirtoCommerce.PageBuilderModule.General.', '');
+                    AppSettings[parameters[key]] = x.value;
+                });
             })
         ).toPromise();
     }

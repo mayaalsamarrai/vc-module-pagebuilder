@@ -15,17 +15,27 @@ export class ApiUrlsService {
 
     constructor(private cookies: CookieService, private windowRef: WindowRef) { }
 
+    generateSettingsUrl() {
+        const url = `${this.params.platformUrl}/api/platform/settings/modules/VirtoCommerce.PageBuilderModule`;
+        return url;
+    }
+
     generateDownloadUrl(contentType: string, filepath: string): string {
         const path = encodeURIComponent(filepath || this.params.path);
-        const url = `${AppSettings.platformUrl}/api/content/${contentType || this.params.contentType}/${this.params.storeId}`
+        const url = `${this.params.platformUrl}/api/content/${contentType || this.params.contentType}/${this.params.storeId}`
             + `?relativeUrl=${path}`;
         return url;
     }
 
+    generateUploadAssetUrl(name: string): string {
+        const assetEndpoint = 'api/platform/assets';
+        const url = `${this.params.platformUrl}/${assetEndpoint}?folderUrl=blogs&name=${name}`;
+        return url;
+    }
     generateUploadUrl(contentType: string = null, pathToUpload: string = null): string {
         const path = encodeURIComponent(pathToUpload || this.params.uploadPath);
         const type = contentType || this.params.contentType;
-        const url = `${AppSettings.platformUrl}/api/content/${type}/${this.params.storeId}?folderUrl=${path}`;
+        const url = `${this.params.platformUrl}/api/content/${type}/${this.params.storeId}?folderUrl=${path}`;
         return url;
     }
 
@@ -48,18 +58,18 @@ export class ApiUrlsService {
 
     getCategoriesEndPoint(): string {
         // /admin/api/catalog/listentries
-        const url = `${AppSettings.platformUrl}/api/catalog/listentries`;
+        const url = `${this.params.platformUrl}/api/catalog/listentries`;
         return url;
     }
 
     getStoresEndPoint(): string {
         // /admin/api/stores/{Electronics}
-        const url = `${AppSettings.platformUrl}/api/stores/${this.params.storeId}`;
+        const url = `${this.params.platformUrl}/api/stores/${this.params.storeId}`;
         return url;
     }
 
     getTokenUrl(): string {
-        const url = `${AppSettings.platformUrl}${AppSettings.tokenUrl}`;
+        const url = `${this.params.platformUrl}${AppSettings.tokenUrl}`;
         return url;
     }
 
@@ -80,10 +90,14 @@ export class ApiUrlsService {
                 storeId: urlParams.get('storeId'),
                 path: urlParams.get('path'),
                 contentType: urlParams.get('contentType'),
+                platformUrl: urlParams.get('platform')
             };
             const index = this._params.path.lastIndexOf('/');
             this._params.filename = index !== -1 ? this._params.path.substr(index + 1) : this._params.path;
             this._params.uploadPath = index === -1 ? '' : this._params.path.substr(0, index);
+            if (this._params.platformUrl) {
+                this._params.platformUrl = this.windowRef.nativeWindow.location.origin;
+            }
         }
         return this._params;
     }

@@ -58,14 +58,14 @@ angular.module(moduleTemplateName, [])
 
 
         //Register module in main menu
-        var menuItem = {
-            path: 'browse/VirtoCommerce.PageBuilderModule',
-            icon: 'fa fa-cube',
-            title: 'VirtoCommerce.PageBuilderModule',
-            priority: 100,
-            action: function () { $state.go('workspace.VirtoCommerce.PageBuilderModule') },
-            permission: 'VirtoCommerce.PageBuilderModulePermission'
-        };
-        mainMenuService.addMenuItem(menuItem);
+        //var menuItem = {
+        //    path: 'browse/VirtoCommerce.PageBuilderModule',
+        //    icon: 'fa fa-cube',
+        //    title: 'VirtoCommerce.PageBuilderModule',
+        //    priority: 100,
+        //    action: function () { $state.go('workspace.VirtoCommerce.PageBuilderModule') },
+        //    permission: 'VirtoCommerce.PageBuilderModulePermission'
+        //};
+        //mainMenuService.addMenuItem(menuItem);
     }
 ]);
