@@ -26,7 +26,7 @@ export class TextItemComponent extends BaseControlComponent<TextControlDescripto
         ],
         extraPlugins: 'stylescombo,justify',
         removeButtons: '',
-        format_tags: 'p;h2;h3;h4',
+        format_tags: 'p;h1;h2;h3;h4',
         contentsCss: `${AppSettings.storeBaseUrl}${AppSettings.contentCssPath}`,
         stylesSet: [
             { name: 'Normal', element: 'p', attributes: [ ] },
