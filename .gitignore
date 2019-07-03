@@ -273,3 +273,5 @@ store/package-lock\.json
 store/dist/designer\.bundle\.js\.map
 
 VirtoCommerce\.PageBuilderModule/VirtoCommerce\.PageBuilderModule/Content/builder/
+dist/
+package-lock.json
