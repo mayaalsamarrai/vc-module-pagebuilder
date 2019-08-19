@@ -1,0 +1,31 @@
+{
+  "pageBuilder": {
+    "blades": {
+      "edit-page": {
+        "title": "{{name}}' bearbeiten",
+        "subtitle": "Seite bearbeiten",
+        "title-new": "Neue Seite",
+        "subtitle-new": "Neue Seite erstellen",
+        "subtitle-post": "Blogpost bearbeiten",
+        "title-new-post": "Neue Post",
+        "subtitle-new-post": "Neuen Blogpost erstellen",
+        "labels": {
+          "name": "Name",
+          "language": "Sprache",
+          "drag-note": "Die Datei hier ziehen und loslassen",
+          "progress": "Fortschritt",
+          "markdown": "Markdown",
+          "metadata": "Metadaten"
+        },
+        "placeholders": {
+          "name": "Namen eingeben",
+          "language": "Wählen Sie aus...",
+          "metadata": "Metadaten eingeben"
+        },
+        "validations": {
+          "pageName-invalid": "Die Seitenname kann alphanumerisch, '_', '-' und '.' Zeichen nur enthalten"
+        }
+      }
+    }
+  }
+}

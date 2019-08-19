@@ -1,17 +1,20 @@
-angular.module('virtoCommerce.contentModule')
-    .controller('virtoCommerce.contentModule.pageAddController', ['$rootScope', '$scope', 'platformWebApp.bladeNavigationService', function ($rootScope, $scope, bladeNavigationService) {
+var moduleTemplateName = "virtoCommerce.pageBuilderModule";
+
+angular.module(moduleTemplateName)
+    .controller('virtoCommerce.pageBuilderModule.pageAddController', ['$rootScope', '$scope', 'platformWebApp.bladeNavigationService', function ($rootScope, $scope, bladeNavigationService) {
         $scope.addDesignPage = function () {
             var newBlade = {
-                id: 'jsonPageDetail',
-                contentType: $scope.blade.parentBlade.contentType,
+                id: 'designPage',
+                contentType: $scope.blade.contentType,
                 storeId: $scope.blade.parentBlade.storeId,
-                folderUrl: $scope.blade.parentBlade.currentEntity.url,
+                storeUrl: $scope.blade.storeUrl,
+                folderUrl: $scope.blade.currentEntity.url,
                 currentEntity: {},
                 isNew: true,
-                title: 'content.blades.edit-page.title-new',
-                subtitle: 'content.blades.edit-page.subtitle-new',
-                controller: 'virtoCommerce.contentModule.editJsonPageController',
-                template: 'Modules/$(VirtoCommerce.Content)/Scripts/blades/pages/edit-json-page.tpl.html'
+                title: 'pageBuilder.blades.edit-page.title-new',
+                subtitle: 'pageBuilder.blades.edit-page.subtitle-new',
+                controller: 'virtoCommerce.pageBuilderModule.editPageController',
+                template: 'Modules/$(VirtoCommerce.PageBuilderModule)/Scripts/blades/pages/edit-page.tpl.html'
             };
 
             bladeNavigationService.showBlade(newBlade, $scope.blade.parentBlade);
@@ -20,23 +23,34 @@ angular.module('virtoCommerce.contentModule')
         $scope.addHtmlPage = function () {
             var newBlade = {
                 id: 'pageDetail',
-                contentType: $scope.blade.parentBlade.contentType,
-                storeId: $scope.blade.parentBlade.storeId,
-                storeUrl: $scope.blade.parentBlade.storeUrl,
-                languages: $scope.blade.parentBlade.languages,
-                folderUrl: $scope.blade.parentBlade.currentEntity.url,
+                contentType: $scope.blade.contentType,
+                storeId: $scope.blade.storeId,
+                storeUrl: $scope.blade.storeUrl,
+                languages: $scope.blade.languages,
+                folderUrl: $scope.blade.currentEntity.url,
                 currentEntity: {},
                 isNew: true,
-                title: 'content.blades.edit-page.title-new',
-                subtitle: 'content.blades.edit-page.subtitle-new',
+                title: null,
                 controller: 'virtoCommerce.contentModule.pageDetailController',
                 template: 'Modules/$(VirtoCommerce.Content)/Scripts/blades/pages/page-detail.tpl.html'
+                //id: 'pageDetail',
+                //contentType: $scope.blade.parentBlade.contentType,
+                //storeId: $scope.blade.parentBlade.storeId,
+                //storeUrl: $scope.blade.parentBlade.storeUrl,
+                //languages: $scope.blade.parentBlade.languages,
+                //folderUrl: $scope.blade.parentBlade.currentEntity.url,
+                //currentEntity: {},
+                //isNew: true,
+                //title: 'pageBuilder.blades.edit-page.title-new',
+                //subtitle: 'pageBuilder.blades.edit-page.subtitle-new',
+                //controller: 'virtoCommerce.contentModule.pageDetailController',
+                //template: 'Modules/$(VirtoCommerce.Content)/Scripts/blades/pages/page-detail.tpl.html'
             };
 
             if (isBlogs()) {
                 angular.extend(newBlade, {
-                    title: 'content.blades.edit-page.title-new-post',
-                    subtitle: 'content.blades.edit-page.subtitle-new-post'
+                    title: 'pageBuilder.blades.edit-page.title-new-post',
+                    subtitle: 'pageBuilder.blades.edit-page.subtitle-new-post'
                 });
             };
 

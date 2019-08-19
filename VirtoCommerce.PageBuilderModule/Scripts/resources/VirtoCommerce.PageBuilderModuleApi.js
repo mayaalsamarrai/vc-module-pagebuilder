@@ -1,4 +1,4 @@
-﻿angular.module('VirtoCommerce.PageBuilderModule')
-.factory('VirtoCommerce.PageBuilderModuleApi', ['$resource', function ($resource) {
-    return $resource('api/VirtoCommerce.PageBuilderModule');
+﻿angular.module('virtoCommerce.pageBuilderModule')
+.factory('virtoCommerce.pageBuilderModuleApi', ['$resource', function ($resource) {
+    return $resource('api/virtoCommerce.pageBuilderModule');
 }]);

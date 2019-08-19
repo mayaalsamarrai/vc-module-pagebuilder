@@ -93,6 +93,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Localizations\de.VirtoCommerce.PageBuilderModule.json" />
+    <Content Include="Localizations\en.VirtoCommerce.PageBuilderModule.json" />
+    <Content Include="Localizations\ru.VirtoCommerce.PageBuilderModule.json" />
     <None Include="module.ignore" />
     <None Include="packages.config" />
     <None Include="app.config" />
@@ -340,8 +343,8 @@
     <Content Include="Content\builder\scripts.dfce1fe12fc306adb686.js" />
     <Content Include="Content\builder\styles.693e327906c76b2754bc.css" />
     <Content Include="module.manifest" />
-    <Content Include="Scripts\blades\pages\edit-json-page.js" />
-    <Content Include="Scripts\blades\pages\edit-json-page.tpl.html" />
+    <Content Include="Scripts\blades\pages\edit-page.js" />
+    <Content Include="Scripts\blades\pages\edit-page.tpl.html" />
     <Content Include="Scripts\blades\pages\page-add.js" />
     <Content Include="Scripts\blades\pages\page-add.tpl.html" />
     <Content Include="Scripts\VirtoCommerce.PageBuilderModule.js" />
