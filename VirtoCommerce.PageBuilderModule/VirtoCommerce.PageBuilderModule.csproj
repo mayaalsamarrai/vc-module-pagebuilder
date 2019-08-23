@@ -347,6 +347,7 @@
     <Content Include="Scripts\blades\pages\edit-page.tpl.html" />
     <Content Include="Scripts\blades\pages\page-add.js" />
     <Content Include="Scripts\blades\pages\page-add.tpl.html" />
+    <Content Include="Scripts\blades\pages\pages-list.js" />
     <Content Include="Scripts\VirtoCommerce.PageBuilderModule.js" />
     <Content Include="Scripts\resources\VirtoCommerce.PageBuilderModuleApi.js" />
   </ItemGroup>
