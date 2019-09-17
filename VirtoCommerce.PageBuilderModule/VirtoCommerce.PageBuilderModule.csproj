@@ -93,23 +93,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Localizations\de.VirtoCommerce.PageBuilderModule.json" />
-    <Content Include="Localizations\en.VirtoCommerce.PageBuilderModule.json" />
-    <Content Include="Localizations\ru.VirtoCommerce.PageBuilderModule.json" />
-    <None Include="module.ignore" />
-    <None Include="packages.config" />
-    <None Include="app.config" />
-    <None Include="Web.config">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-    <None Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Content\builder\3rdpartylicenses.txt" />
     <Content Include="Content\builder\assets\add.0971cbb3a651804271ae.svg" />
     <Content Include="Content\builder\assets\carret.4ab40e733155121317c9.svg" />
@@ -218,11 +201,7 @@
     <Content Include="Content\builder\assets\typography.31cbec1acabc267b869f.svg" />
     <Content Include="Content\builder\assets\undo.a20371cef78f5636d410.svg" />
     <Content Include="Content\builder\assets\visible.060ede2ac1a2b77303bc.svg" />
-    <Content Include="Content\builder\data\blocks_schema.json" />
-    <Content Include="Content\builder\data\page_data.page" />
     <Content Include="Content\builder\data\settings.json" />
-    <Content Include="Content\builder\data\settings_data.json" />
-    <Content Include="Content\builder\data\settings_schema.json" />
     <Content Include="Content\builder\external\ckeditor\adapters\jquery.js" />
     <Content Include="Content\builder\external\ckeditor\build-config.js" />
     <Content Include="Content\builder\external\ckeditor\CHANGES.md" />
@@ -337,11 +316,28 @@
     <Content Include="Content\builder\external\ckeditor\styles.js" />
     <Content Include="Content\builder\favicon.ico" />
     <Content Include="Content\builder\index.html" />
-    <Content Include="Content\builder\main.4652f941a0ead2bbace9.js" />
+    <Content Include="Content\builder\main.2e8de4614b686cc140a1.js" />
     <Content Include="Content\builder\polyfills.7086edbc02ea328fd9a6.js" />
     <Content Include="Content\builder\runtime.26209474bfa8dc87a77c.js" />
     <Content Include="Content\builder\scripts.dfce1fe12fc306adb686.js" />
     <Content Include="Content\builder\styles.693e327906c76b2754bc.css" />
+    <Content Include="Localizations\de.VirtoCommerce.PageBuilderModule.json" />
+    <Content Include="Localizations\en.VirtoCommerce.PageBuilderModule.json" />
+    <Content Include="Localizations\ru.VirtoCommerce.PageBuilderModule.json" />
+    <None Include="module.ignore" />
+    <None Include="packages.config" />
+    <None Include="app.config" />
+    <None Include="Web.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="module.manifest" />
     <Content Include="Scripts\blades\pages\edit-page.js" />
     <Content Include="Scripts\blades\pages\edit-page.tpl.html" />

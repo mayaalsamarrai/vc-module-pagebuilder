@@ -63,16 +63,6 @@
                     },
                     "configurations": {
                         "production": {
-                            "fileReplacements": [
-                                {
-                                    "replace": "src/environments/environment.ts",
-                                    "with": "src/environments/environment.prod.ts"
-                                },
-                                {
-                                    "replace": "src/data/settings.json",
-                                    "with": "src/data/settings.prod.json"
-                                }
-                            ],
                             "optimization": true,
                             "outputHashing": "all",
                             "sourceMap": false,
@@ -81,19 +71,11 @@
                             "aot": true,
                             "extractLicenses": true,
                             "vendorChunk": false,
+                            "outputPath": "../VirtoCommerce.PageBuilderModule/Content/builder/",
+                            "resourcesOutputPath": "assets",
                             "buildOptimizer": true
                         },
                         "dev": {
-                            "fileReplacements": [
-                                {
-                                    "replace": "src/environments/environment.ts",
-                                    "with": "src/environments/environment.dev.ts"
-                                },
-                                {
-                                    "replace": "src/data/settings.json",
-                                    "with": "src/data/settings.dev.json"
-                                }
-                            ],
                             "optimization": false,
                             "outputHashing": "all",
                             "sourceMap": true,
@@ -103,76 +85,21 @@
                             "extractLicenses": true,
                             "vendorChunk": false,
                             "buildOptimizer": false,
+                            "outputPath": "../../vc-platform/VirtoCommerce.Platform.Web/Modules/VirtoCommerce.PageBuilderModule/Content/builder/",
                             "resourcesOutputPath": "assets",
                             "watch": true
                         },
-                        "virto": {
-                            "fileReplacements": [
-                                {
-                                    "replace": "src/environments/environment.ts",
-                                    "with": "src/environments/environment.virto.ts"
-                                },
-                                {
-                                    "replace": "src/data/settings.json",
-                                    "with": "src/data/settings.virto.json"
-                                }
-                            ],
-                            "optimization": true,
-                            "outputHashing": "all",
-                            "sourceMap": false,
-                            "extractCss": true,
-                            "namedChunks": false,
-                            "aot": true,
-                            "extractLicenses": true,
-                            "vendorChunk": false,
-                            "buildOptimizer": true,
-                            "baseHref": "/designer/",
-                            "resourcesOutputPath": "assets"
-                        },
                         "module": {
-                            "fileReplacements": [
-                                {
-                                    "replace": "src/environments/environment.ts",
-                                    "with": "src/environments/environment.module.ts"
-                                },
-                                {
-                                    "replace": "src/data/settings.json",
-                                    "with": "src/data/settings.module.json"
-                                }
-                            ],
-                            "optimization": true,
+                            "optimization": false,
                             "outputHashing": "all",
-                            "sourceMap": false,
+                            "sourceMap": true,
                             "extractCss": true,
                             "namedChunks": false,
-                            "aot": true,
+                            "aot": false,
                             "extractLicenses": true,
                             "vendorChunk": false,
-                            "buildOptimizer": true,
-                            "outputPath": "../VirtoCommerce.PageBuilderModule/VirtoCommerce.PageBuilderModule/Content/builder/",
-                            "resourcesOutputPath": "assets"
-                        },
-                        "prev": {
-                            "fileReplacements": [
-                                {
-                                    "replace": "src/environments/environment.ts",
-                                    "with": "src/environments/environment.prev.ts"
-                                },
-                                {
-                                    "replace": "src/data/settings.json",
-                                    "with": "src/data/settings.prev.json"
-                                }
-                            ],
-                            "optimization": true,
-                            "outputHashing": "all",
-                            "sourceMap": false,
-                            "extractCss": true,
-                            "namedChunks": false,
-                            "aot": true,
-                            "extractLicenses": true,
-                            "vendorChunk": false,
-                            "buildOptimizer": true,
-                            "baseHref": "/designer/",
+                            "buildOptimizer": false,
+                            "outputPath": "../VirtoCommerce.PageBuilderModule/Content/builder/",
                             "resourcesOutputPath": "assets"
                         }
                     }

@@ -25,9 +25,11 @@ import { RootEffects } from './store/root.effects';
 import { reducer } from './store/root.reducer';
 import { environment } from '../environments/environment';
 import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
+import { APP_BASE_HREF } from '@angular/common';
 import { AppHttpInterceptor, ApiUrlsService, PreviewService, WindowRef } from '@app/services';
 import { LoadingComponent } from './components/loading/loading.component';
 import { RefreshTokenInterceptor } from './services/refresh-token.interceptor';
+import { AppSettings } from './services/app.settings';
 
 @NgModule({
     declarations: [
@@ -84,6 +86,14 @@ import { RefreshTokenInterceptor } from './services/refresh-token.interceptor';
                 return new PreviewService();
             },
             deps: [ ]
+        },
+        {
+            provide: APP_BASE_HREF,
+            useFactory: (windowRef: WindowRef) => {
+                console.log(windowRef.nativeWindow.location);
+                console.log(AppSettings);
+            },
+            deps: [ WindowRef ]
         }
     ],
     bootstrap: [AppComponent]

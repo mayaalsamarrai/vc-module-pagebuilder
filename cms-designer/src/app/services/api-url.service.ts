@@ -4,6 +4,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { PageDescriptor } from '@shared/models';
 import { AppSettings } from './app.settings';
 import { WindowRef } from './window-ref';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
     providedIn: 'root'
@@ -17,6 +18,11 @@ export class ApiUrlsService {
 
     generateSettingsUrl() {
         const url = `${this.params.platformUrl}/api/platform/settings/modules/VirtoCommerce.PageBuilderModule`;
+        return url;
+    }
+
+    generateStoreSettingsUrl() {
+        const url = `${this.params.platformUrl}/api/stores/${this.params.storeId}`;
         return url;
     }
 
@@ -90,15 +96,21 @@ export class ApiUrlsService {
                 storeId: urlParams.get('storeId'),
                 path: urlParams.get('path'),
                 contentType: urlParams.get('contentType'),
-                platformUrl: urlParams.get('platform')
+                platformUrl: urlParams.get('platform') || this.getPlatformUrl()
             };
             const index = this._params.path.lastIndexOf('/');
             this._params.filename = index !== -1 ? this._params.path.substr(index + 1) : this._params.path;
             this._params.uploadPath = index === -1 ? '' : this._params.path.substr(0, index);
-            if (this._params.platformUrl) {
+            if (!this._params.platformUrl) {
                 this._params.platformUrl = this.windowRef.nativeWindow.location.origin;
             }
         }
         return this._params;
+    }
+
+    private getPlatformUrl(): string {
+        const url = this.windowRef.nativeWindow.location.href;
+        const result = url.substr(0, url.indexOf(environment.moduleLocation));
+        return result;
     }
 }

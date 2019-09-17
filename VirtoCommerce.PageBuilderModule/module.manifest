@@ -20,13 +20,6 @@
     <settings>
         <group name="General">
             <setting>
-                <name>VirtoCommerce.PageBuilderModule.General.StoreBaseUrl</name>
-                <valueType>string</valueType>
-                <defaultValue></defaultValue>
-                <title>Store Base Url</title>
-                <description></description>
-            </setting>
-            <setting>
                 <name>VirtoCommerce.PageBuilderModule.General.StorePreviewPath</name>
                 <valueType>string</valueType>
                 <defaultValue>/designer-preview</defaultValue>
@@ -47,13 +40,13 @@
                 <title>Integer</title>
                 <description>An integer setting</description>
             </setting>-->
-            <setting>
+            <!--<setting>
                 <name>VirtoCommerce.PageBuilderModule.General.PlatformUrl</name>
                 <valueType>string</valueType>
                 <defaultValue></defaultValue>
                 <title>Platform base url</title>
                 <description></description>
-            </setting>
+            </setting>-->
             <setting>
                 <name>VirtoCommerce.PageBuilderModule.General.TokenUrl</name>
                 <valueType>string</valueType>

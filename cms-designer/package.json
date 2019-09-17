@@ -4,9 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --prod --base-href /v2/designer/ --resourcesOutputPath=assets",
-    "virto": "ng build -c virto",
-    "prev": "ng build -c prev",
+    "build": "ng build -c production",
     "serve": "ng build -c dev",
     "module": "ng build -c module",
     "test": "ng test",

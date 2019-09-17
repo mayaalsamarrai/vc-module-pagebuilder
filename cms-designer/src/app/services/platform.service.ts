@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, combineLatest } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { ApiUrlsService } from './api-url.service';
 import { PresetsModel } from '@themes/models';
 import { BlockValuesModel, BlocksSchema } from '@shared/models';
-import { PlatformSetting } from '@app/models';
+import { PlatformSetting, StoreSettings } from '@app/models';
 
 import { AppSettings } from './app.settings';
 
@@ -39,19 +39,28 @@ export class PlatformService {
     }
 
     initSettings(): Promise<any> {
-        const url = this.urls.generateSettingsUrl();
         const parameters = {};
-        parameters['StoreBaseUrl'] = 'storeBaseUrl';
         parameters['StorePreviewPath'] = 'storePreviewPath';
         parameters['TokenUrl'] = 'tokenUrl';
-        return this.http.get<PlatformSetting[]>(url).pipe(
-            tap(settings => {
-                settings.forEach(x => {
+        return combineLatest([this.moduleSettings(), this.storeSettings()]).pipe(
+            tap(([moduleSettings, storeSettings]) => {
+                moduleSettings.forEach(x => {
                     const key = x.name.replace('VirtoCommerce.PageBuilderModule.General.', '');
-                    AppSettings[parameters[key]] = x.value;
+                    AppSettings[parameters[key]] = x.value || x.defaultValue;
                 });
+                AppSettings.storeBaseUrl = storeSettings.secureUrl || storeSettings.url;
             })
         ).toPromise();
+    }
+
+    private moduleSettings(): Observable<PlatformSetting[]> {
+        const url = this.urls.generateSettingsUrl();
+        return this.http.get<PlatformSetting[]>(url);
+    }
+
+    private storeSettings(): Observable<StoreSettings> {
+        const url = this.urls.generateStoreSettingsUrl();
+        return this.http.get<StoreSettings>(url);
     }
 
     private downloadModel<T>(contentType: string = null, filepath: string = null): Observable<T> {

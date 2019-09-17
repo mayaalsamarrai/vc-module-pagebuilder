@@ -17,3 +17,8 @@ export interface PlatformSetting {
     title: string;
     description: string;
 }
+
+export interface StoreSettings {
+    url: string;
+    secureUrl: string;
+}

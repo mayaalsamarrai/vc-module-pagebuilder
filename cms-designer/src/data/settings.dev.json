@@ -1,8 +1,0 @@
-{
-    "storeBaseUrl": "http://localhost:2082",
-    "storePreviewPath": "/designer-preview",
-    "contentCssPath": "/themes/assets/style.min.css",
-    "baseUrl": "/designer/",
-    "platformUrl": null,
-    "tokenUrl": "/token"
-}
