@@ -36,6 +36,11 @@ export class ImageItemComponent extends BaseControlComponent<ImageControlDescrip
         };
     }
 
+    changeAlt(value: string) {
+        this.setValue({ altText: value });
+        this.onChange(this.value);
+    }
+
     changeWidth(value: number) {
         this.setValue({ width: (value || undefined) });
         this.onChange(this.value);
@@ -51,8 +56,15 @@ export class ImageItemComponent extends BaseControlComponent<ImageControlDescrip
         this.onChange(this.value);
     }
 
-    setValue(value: ImageDescriptor) {
+    setValue(value: ImageDescriptor|string) {
+        // TODO: remove before relese. used for backward compatibility when develop
+        if (typeof value === 'string') {
+            value = { url: value };
+        }
         const result = { ...this.value, ...value };
+        if (!result.altText) {
+            result.altText = null;
+        }
         super.setValue(result);
     }
 }
@@ -61,4 +73,5 @@ interface ImageDescriptor {
     url?: string;
     width?: number;
     height?: number;
+    altText?: string;
 }
