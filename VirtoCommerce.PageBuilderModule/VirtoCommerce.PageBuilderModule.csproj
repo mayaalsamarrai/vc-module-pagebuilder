@@ -316,11 +316,11 @@
     <Content Include="Content\builder\external\ckeditor\styles.js" />
     <Content Include="Content\builder\favicon.ico" />
     <Content Include="Content\builder\index.html" />
-    <Content Include="Content\builder\main.2e8de4614b686cc140a1.js" />
+    <Content Include="Content\builder\main.c1b1748e9aaaa75cae3b.js" />
     <Content Include="Content\builder\polyfills.7086edbc02ea328fd9a6.js" />
     <Content Include="Content\builder\runtime.26209474bfa8dc87a77c.js" />
     <Content Include="Content\builder\scripts.dfce1fe12fc306adb686.js" />
-    <Content Include="Content\builder\styles.693e327906c76b2754bc.css" />
+    <Content Include="Content\builder\styles.41db314e18ed83da22bb.css" />
     <Content Include="Localizations\de.VirtoCommerce.PageBuilderModule.json" />
     <Content Include="Localizations\en.VirtoCommerce.PageBuilderModule.json" />
     <Content Include="Localizations\ru.VirtoCommerce.PageBuilderModule.json" />

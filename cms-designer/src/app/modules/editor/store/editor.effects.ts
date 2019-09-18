@@ -63,7 +63,7 @@ export class EditorEffects {
         withLatestFrom(this.store$.select(fromEditor.getPage)),
         map(([action, page]) => {
             const block = { ...action.payload };
-            block.id = page.content.reduce((v: number, b: BlockValuesModel) => Math.max(<number>b.id, v), 0) + 1;
+            block.id = page.content.reduce((v: number, b: BlockValuesModel) => Math.max(b.id, v), 0) + 1;
             return new editorActions.ClonePageItem({ oldBlock: action.payload, newBlock: block });
         })
     );
@@ -75,7 +75,7 @@ export class EditorEffects {
         withLatestFrom(this.store$.select(fromEditor.getPage)),
         map(([blockSchema, page]) => {
             const block = <BlockValuesModel>{
-                id: page.content.length ? Math.max(...page.content.map(v => <number>v.id || 0)) + 1 : 1,
+                id: page.content.length ? Math.max(...page.content.map(v => v.id || 0)) + 1 : 1,
                 type: blockSchema.type
             };
             blockSchema.settings.forEach(x => block[x.id] = x['default'] || null);
@@ -102,25 +102,34 @@ export class EditorEffects {
         ofType<editorActions.LoadPage>(editorActions.EditorActionTypes.LoadPage),
         switchMap(() =>
             this.pages.downloadPage().pipe(
-                map(data => {
-                    const result = <PageModel>{
-                        settings: data.find(x => x.type === 'settings') || { },
-                        content: data.filter(x => x.type !== 'settings')
-                    };
-                    data.forEach((x, index) => x.id = index + 1);
-                    return new editorActions.LoadPageSuccess(result);
-                }),
+                map(data => new editorActions.LoadPageSuccess(data)),
                 catchError(error => of(new editorActions.LoadPageFail(error)))
             )
         )
     );
 
     @Effect()
-    uploadPage$: Observable<Action> = this.actions$.pipe(
+    savePage$: Observable<Action> = this.actions$.pipe(
         ofType<editorActions.SavePage>(editorActions.EditorActionTypes.SavePage),
+        map(() => new editorActions.ReLoadPage())
+    );
+
+    @Effect()
+    reloadPage$: Observable<Action> = this.actions$.pipe(
+        ofType<editorActions.ReLoadPage>(editorActions.EditorActionTypes.ReLoadPage),
+        switchMap(() => this.pages.downloadPage().pipe(
+            map(data => new editorActions.ReLoadPageSuccess(data)),
+            catchError(error => of(new editorActions.ReLoadPageFail(error)))
+        ))
+    );
+
+    @Effect()
+    uploadPage$: Observable<Action> = this.actions$.pipe(
+        ofType(editorActions.EditorActionTypes.ReLoadPageFail, editorActions.EditorActionTypes.ReLoadPageSuccess),
         withLatestFrom(this.store$.select(fromEditor.getPage)),
-        switchMap(([, page]) => {
-            const data = [page.settings, ...page.content];
+        switchMap(([action, page]: [any, PageModel]) => {
+            const settings = action.payload.settings || page.settings;
+            const data = [settings, ...page.content];
             return this.pages.uploadPage(data).pipe(
                 map(() => new editorActions.SavePageSuccess()),
                 catchError(err => of(new editorActions.SavePageFail(err)))

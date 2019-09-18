@@ -25,6 +25,9 @@ export enum EditorActionTypes {
     LoadPage = '[Page] Load Page',
     LoadPageFail = '[Page] Load Page Fail',
     LoadPageSuccess = '[Page] Load Page Success',
+    ReLoadPage = '[Page] ReLoad Page',
+    ReLoadPageFail = '[Page] ReLoad Page Fail',
+    ReLoadPageSuccess = '[Page] ReLoad Page Success',
     MoveBlock = '[Page] Move Block',
     OrderChanged = '[Page] Order Changed',
     PreviewPageItem = '[Page] Preview Page Item',
@@ -130,6 +133,20 @@ export class LoadPageSuccess implements Action {
     constructor(public payload: PageModel) { }
 }
 
+export class ReLoadPage implements Action {
+    readonly type = EditorActionTypes.ReLoadPage;
+}
+
+export class ReLoadPageFail implements Action {
+    readonly type = EditorActionTypes.ReLoadPageFail;
+    constructor(public payload: HttpErrorResponse) { }
+}
+
+export class ReLoadPageSuccess implements Action {
+    readonly type = EditorActionTypes.ReLoadPageSuccess;
+    constructor(public payload: PageModel) { }
+}
+
 export class MoveBlock implements Action {
     readonly type = EditorActionTypes.MoveBlock;
     constructor(public payload: { oldIndex: number, newIndex: number }) { }
@@ -220,8 +237,7 @@ export class SetEditorMode implements Action {
     constructor(public payload: string) { }
 }
 
-export type EditorActions = LoadPage
-    | AddPageItem
+export type EditorActions = AddPageItem
     | BlocksSchemaFail
     | BlocksSchemaLoaded
     | ClearPageChanges
@@ -237,6 +253,9 @@ export type EditorActions = LoadPage
     | LoadPage
     | LoadPageSuccess
     | LoadPageFail
+    | ReLoadPage
+    | ReLoadPageSuccess
+    | ReLoadPageFail
     | MoveBlock
     | OrderChanged
     | PreviewPageItem

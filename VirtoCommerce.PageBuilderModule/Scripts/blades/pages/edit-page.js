@@ -50,31 +50,7 @@ angular.module('virtoCommerce.pageBuilderModule')
                         originFileName += '.page';
                     }
                 }
-
-                $scope.blade.currentEntity.name = originFileName;
-                $scope.blade.currentEntity.relativeUrl = ($scope.blade.parentBlade.currentEntity.relativeUrl || '') + '/' + originFileName;
-                $scope.blade.currentEntity.content = JSON.stringify($scope.blade.currentEntity.blocks, null, 4);
-
-                blade.isLoading = true;
-
-                contentApi.saveMultipartContent({
-                    contentType: blade.contentType,
-                    storeId: blade.storeId,
-                    folderUrl: blade.folderUrl || ''
-                }, $scope.blade.currentEntity,
-                    function () {
-                        blade.isLoading = false;
-                        blade.origEntity = angular.copy(blade.currentEntity);
-                        if (blade.isNew) {
-                            $scope.bladeClose();
-                            $rootScope.$broadcast("cms-statistics-changed", blade.storeId);
-                        }
-
-                        blade.parentBlade.refresh();
-                        if (blade.isNew) {
-                            runDesigner();
-                        }
-                    }, function (error) { bladeNavigationService.setError('Error ' + error.status, blade); });
+                reloadPageAndSave(originFileName);
             };
 
             if (!blade.isNew) {
@@ -151,6 +127,44 @@ angular.module('virtoCommerce.pageBuilderModule')
                     };
                     dialogService.showNotificationDialog(dialog);
                 }
+            }
+
+            function reloadPageAndSave(originFileName) {
+                blade.isLoading = true;
+                contentApi.get({
+                    contentType: $scope.blade.contentType,
+                    storeId: $scope.blade.storeId,
+                    relativeUrl: $scope.blade.currentEntity.relativeUrl
+                }, function (data) {
+                    var page = JSON.parse(data.data);
+                    page[0] = $scope.blade.currentEntity.settings;
+                    $scope.blade.currentEntity.blocks = page;
+                    $scope.blade.currentEntity.name = originFileName;
+                    $scope.blade.currentEntity.relativeUrl = ($scope.blade.parentBlade.currentEntity.relativeUrl || '') + '/' + originFileName;
+                    $scope.blade.currentEntity.content = JSON.stringify($scope.blade.currentEntity.blocks, null, 4);
+                    contentApi.saveMultipartContent({
+                        contentType: blade.contentType,
+                        storeId: blade.storeId,
+                        folderUrl: blade.folderUrl || ''
+                    }, $scope.blade.currentEntity,
+                        function () {
+                            blade.isLoading = false;
+                            blade.origEntity = angular.copy(blade.currentEntity);
+                            if (blade.isNew) {
+                                $scope.bladeClose();
+                                $rootScope.$broadcast("cms-statistics-changed", blade.storeId);
+                            }
+
+                            blade.parentBlade.refresh();
+                            if (blade.isNew) {
+                                runDesigner();
+                            }
+                        }, function (error) { bladeNavigationService.setError('Error ' + error.status, blade); });
+                }, function (error) {
+                    var dialog = { id: "errorDetails" };
+                    dialog.message = error;
+                    dialogService.showDialog(dialog, '$(Platform)/Scripts/app/modularity/dialogs/errorDetails-dialog.tpl.html', 'platformWebApp.confirmDialogController');
+                });
             }
 
             blade.onClose = function (closeCallback) {
