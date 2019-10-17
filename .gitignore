@@ -21,6 +21,8 @@ bld/
 [Bb]in/
 [Oo]bj/
 [Ll]og/
+builder/
+*.zip
 
 # Visual Studio 2015 cache/options directory
 .vs/
@@ -197,6 +199,7 @@ ClientBin/
 *.pfx
 *.publishsettings
 node_modules/
+dist/
 orleans.codegen.cs
 
 # Since there are multiple workflows, uncomment next line to ignore bower_components
@@ -273,3 +276,6 @@ store/package-lock\.json
 store/dist/designer\.bundle\.js\.map
 
 VirtoCommerce\.PageBuilderModule/VirtoCommerce\.PageBuilderModule/Content/builder/
+dist/
+package-lock.json
+\.vscode

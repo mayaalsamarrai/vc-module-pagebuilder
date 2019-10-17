@@ -1,49 +1,38 @@
-angular.module('virtoCommerce.contentModule')
-    .controller('virtoCommerce.contentModule.editJsonPageController', ['$rootScope', '$scope', 'platformWebApp.validators', 'virtoCommerce.contentModule.contentApi', 'platformWebApp.dynamicProperties.api', 'platformWebApp.bladeNavigationService', 'platformWebApp.dialogService', 'platformWebApp.dynamicProperties.dictionaryItemsApi', 'platformWebApp.settings',
+angular.module('virtoCommerce.pageBuilderModule')
+    .controller('virtoCommerce.pageBuilderModule.editPageController', ['$rootScope', '$scope', 'platformWebApp.validators', 'virtoCommerce.contentModule.contentApi', 'platformWebApp.dynamicProperties.api', 'platformWebApp.bladeNavigationService', 'platformWebApp.dialogService', 'platformWebApp.dynamicProperties.dictionaryItemsApi', 'platformWebApp.settings',
         function ($rootScope, $scope, validators, contentApi, dynamicPropertiesApi, bladeNavigationService, dialogService, dictionaryItemsApi, settings) {
             var blade = $scope.blade;
             blade.updatePermission = 'content:update';
             blade.designerUrl = null;
-            var designerUrlPromise = settings.getValues({ id: 'VirtoCommerce.Content.DesignerUrl' }).$promise;
             $scope.validators = validators;
 
-            var userName = 'draft';
-
             blade.initialize = function () {
-                designerUrlPromise.then(function (promiseData) {
-                    blade.designerUrl = promiseData;
-                    if (blade.designerUrl == '')
-                        blade.designerUrl = null;
-                });
+                blade.designerUrl = window.location.origin +
+                    (window.location.pahtname === '/' ? '' : window.location.pathname) +
+                    '/Modules/VirtoCommerce.PageBuilderModule/Content/builder/';
                 if (blade.isNew) {
                     blade.isLoading = false;
                     $scope.blade.currentEntity.blocks = [{ type: 'settings', title: '', permalink: '' }];
                     $scope.blade.currentEntity.settings = $scope.blade.currentEntity.blocks[0];
-
                     $scope.blade.currentEntity.content = JSON.stringify($scope.blade.currentEntity.blocks);
                 } else {
-                    var fileName = $scope.blade.currentEntity.name;
-                    if (!fileName.endsWith('.page')) {
-                        fileName += '.page';
-                    }
                     contentApi.get({
                         contentType: blade.contentType,
                         storeId: blade.storeId,
                         relativeUrl: blade.currentEntity.relativeUrl
-                    },
-                        function (data) {
-                            blade.isLoading = false;
-                            blade.currentEntity.content = JSON.parse(data.data);
+                    }, function (data) {
+                        blade.isLoading = false;
+                        blade.currentEntity.content = JSON.parse(data.data);
 
-                            $scope.blade.currentEntity.blocks = blade.currentEntity.content;
-                            $scope.blade.currentEntity.settings = $scope.blade.currentEntity.blocks[0];
-                            $scope.blade.currentEntity.content = JSON.stringify($scope.blade.currentEntity.blocks);
+                        $scope.blade.currentEntity.blocks = blade.currentEntity.content;
+                        $scope.blade.currentEntity.settings = $scope.blade.currentEntity.blocks[0];
+                        $scope.blade.currentEntity.content = JSON.stringify($scope.blade.currentEntity.blocks);
 
-                            blade.origEntity = angular.copy(blade.currentEntity);
-                        },
-                        function (error) {
-                            bladeNavigationService.setError('Error ' + error.status, $scope.blade); blade.isLoading = false;
-                        });
+                        blade.origEntity = angular.copy(blade.currentEntity);
+                    }, function (error) {
+                        bladeNavigationService.setError('Error ' + error.status, $scope.blade);
+                        blade.isLoading = false;
+                    });
                 }
             };
 
@@ -61,31 +50,7 @@ angular.module('virtoCommerce.contentModule')
                         originFileName += '.page';
                     }
                 }
-
-                $scope.blade.currentEntity.name = originFileName;
-                $scope.blade.currentEntity.relativeUrl = ($scope.blade.parentBlade.currentEntity.relativeUrl || '') + '/' + originFileName;
-                $scope.blade.currentEntity.content = JSON.stringify($scope.blade.currentEntity.blocks, null, 4);
-
-                blade.isLoading = true;
-
-                contentApi.saveMultipartContent({
-                    contentType: blade.contentType,
-                    storeId: blade.storeId,
-                    folderUrl: blade.folderUrl || ''
-                }, $scope.blade.currentEntity,
-                    function () {
-                        blade.isLoading = false;
-                        blade.origEntity = angular.copy(blade.currentEntity);
-                        if (blade.isNew) {
-                            $scope.bladeClose();
-                            $rootScope.$broadcast("cms-statistics-changed", blade.storeId);
-                        }
-
-                        blade.parentBlade.refresh();
-                        if (blade.isNew) {
-                            runDesigner();
-                        }
-                    }, function (error) { bladeNavigationService.setError('Error ' + error.status, blade); });
+                reloadPageAndSave(originFileName);
             };
 
             if (!blade.isNew) {
@@ -108,16 +73,6 @@ angular.module('virtoCommerce.contentModule')
                         name: "content.commands.preview-page", icon: 'fa fa-eye',
                         executeMethod: function () {
                             if (blade.storeUrl) {
-                                //var fileNameArray = blade.currentEntity.relativeUrl.split('.');
-                                //var fileName = _.first(fileNameArray);
-                                //var locale = '';
-                                //if (_.size(fileNameArray) > 2)
-                                //    locale = '/' + fileNameArray[1];
-                                //var contentType = '/' + blade.contentType;
-                                //var permalink = blade.currentEntity.settings.permalink;
-                                //var page = '/' + (permalink && permalink.length
-                                //    ? permalink.replace(/^\/+|\/+$/g, '')
-                                //    : fileName.replace(/^\/+|\/+$/g, ''));
                                 var path = generatePath();
                                 window.open(blade.storeUrl + path, '_blank');
                             }
@@ -133,17 +88,8 @@ angular.module('virtoCommerce.contentModule')
                         canExecuteMethod: function () { return true; }
                     },
                     {
-                        name: "content.commands.open-designer", icon: 'fa fa-crop',
+                        name: "pageBuilder.commands.open-designer", icon: 'fa fa-crop',
                         executeMethod: function () {
-                            //var fileNameArray = blade.currentEntity.relativeUrl.split('.');
-                            //var fileName = _.first(fileNameArray);
-                            //var locale = '';
-                            //if (_.size(fileNameArray) > 2)
-                            //    locale = fileNameArray[1];
-                            //var contentType = blade.contentType;
-
-                            //// overwrite the name for now
-                            //fileName = $scope.blade.currentEntity.name;
                             runDesigner();
                         },
                         canExecuteMethod: function () { return true; }
@@ -170,6 +116,7 @@ angular.module('virtoCommerce.contentModule')
 
             function runDesigner() {
                 if (blade.designerUrl) {
+                    // /Modules/VirtoCommerce.PageBuilderModule/Content/builder/
                     var path = blade.currentEntity.relativeUrl;
                     window.open(blade.designerUrl + '?path=' + path + '&storeId=' + blade.storeId + '&contentType=' + blade.contentType, '_blank');
                 } else {
@@ -182,6 +129,44 @@ angular.module('virtoCommerce.contentModule')
                 }
             }
 
+            function reloadPageAndSave(originFileName) {
+                blade.isLoading = true;
+                contentApi.get({
+                    contentType: $scope.blade.contentType,
+                    storeId: $scope.blade.storeId,
+                    relativeUrl: $scope.blade.currentEntity.relativeUrl
+                }, function (data) {
+                    var page = JSON.parse(data.data);
+                    page[0] = $scope.blade.currentEntity.settings;
+                    $scope.blade.currentEntity.blocks = page;
+                    $scope.blade.currentEntity.name = originFileName;
+                    $scope.blade.currentEntity.relativeUrl = ($scope.blade.parentBlade.currentEntity.relativeUrl || '') + '/' + originFileName;
+                    $scope.blade.currentEntity.content = JSON.stringify($scope.blade.currentEntity.blocks, null, 4);
+                    contentApi.saveMultipartContent({
+                        contentType: blade.contentType,
+                        storeId: blade.storeId,
+                        folderUrl: blade.folderUrl || ''
+                    }, $scope.blade.currentEntity,
+                        function () {
+                            blade.isLoading = false;
+                            blade.origEntity = angular.copy(blade.currentEntity);
+                            if (blade.isNew) {
+                                $scope.bladeClose();
+                                $rootScope.$broadcast("cms-statistics-changed", blade.storeId);
+                            }
+
+                            blade.parentBlade.refresh();
+                            if (blade.isNew) {
+                                runDesigner();
+                            }
+                        }, function (error) { bladeNavigationService.setError('Error ' + error.status, blade); });
+                }, function (error) {
+                    var dialog = { id: "errorDetails" };
+                    dialog.message = error;
+                    dialogService.showDialog(dialog, '$(Platform)/Scripts/app/modularity/dialogs/errorDetails-dialog.tpl.html', 'platformWebApp.confirmDialogController');
+                });
+            }
+
             blade.onClose = function (closeCallback) {
                 bladeNavigationService.showConfirmationIfNeeded(isDirty(), canSave(), blade, $scope.saveChanges, closeCallback, "content.dialogs.page-save.title", "content.dialogs.page-save.message");
             };
@@ -189,9 +174,7 @@ angular.module('virtoCommerce.contentModule')
             var formScope;
             $scope.setForm = function (form) { $scope.formScope = formScope = form; };
 
-            var getDictionaryValuesCallback;
             $scope.getDictionaryValues = function (property, callback) {
-                getDictionaryValuesCallback = callback;
                 dictionaryItemsApi.query({ id: property.objectType, propertyId: property.id }, callback);
             };
 

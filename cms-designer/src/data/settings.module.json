@@ -1,9 +1,0 @@
-{
-    "storeBaseUrl": "http://vc-public-test.azurewebsites.net",
-    "storePreviewPath": "/designer-preview",
-    "contentCssPath": "/themes/assets/style.min.css",
-    "baseUrl": "/Modules/VirtoCommerce.PageBuilderModule/Content/builder/",
-    "platformUrl": null,
-    "tokenUrl": "/token",
-    "previewTimeout": 120000
-}

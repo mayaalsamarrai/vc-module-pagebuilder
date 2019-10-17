@@ -4,4 +4,5 @@ export interface PageDescriptor {
     contentType: string;
     filename?: string;
     uploadPath?: string;
+    platformUrl?: string;
 }

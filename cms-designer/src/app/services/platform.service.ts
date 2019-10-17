@@ -1,19 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, combineLatest } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { ApiUrlsService } from './api-url.service';
 import { PresetsModel } from '@themes/models';
 import { BlockValuesModel, BlocksSchema } from '@shared/models';
-import { EnvironmentSettings } from '@app/models';
-import { WindowRef } from './window-ref';
+import { PlatformSetting, StoreSettings } from '@app/models';
 
 import { AppSettings } from './app.settings';
 
 @Injectable()
 export class PlatformService {
 
-    constructor(private http: HttpClient, private urls: ApiUrlsService, private windowRef: WindowRef) { }
+    constructor(private http: HttpClient, private urls: ApiUrlsService) { }
 
     downloadPreset<T>(filename: string): Observable<T> {
         return this.downloadModel<T>('themes', `/default/config/${filename}`);
@@ -40,14 +39,28 @@ export class PlatformService {
     }
 
     initSettings(): Promise<any> {
-        return this.http.get<EnvironmentSettings>('data/settings.json').pipe(
-            tap(x => {
-                Object.assign(AppSettings, x);
-                if (!AppSettings.platformUrl) {
-                    AppSettings.platformUrl = this.windowRef.nativeWindow.location.origin + '/';
-                }
+        const parameters = {};
+        parameters['StorePreviewPath'] = 'storePreviewPath';
+        parameters['TokenUrl'] = 'tokenUrl';
+        return combineLatest([this.moduleSettings(), this.storeSettings()]).pipe(
+            tap(([moduleSettings, storeSettings]) => {
+                moduleSettings.forEach(x => {
+                    const key = x.name.replace('VirtoCommerce.PageBuilderModule.General.', '');
+                    AppSettings[parameters[key]] = x.value || x.defaultValue;
+                });
+                AppSettings.storeBaseUrl = storeSettings.secureUrl || storeSettings.url;
             })
         ).toPromise();
+    }
+
+    private moduleSettings(): Observable<PlatformSetting[]> {
+        const url = this.urls.generateSettingsUrl();
+        return this.http.get<PlatformSetting[]>(url);
+    }
+
+    private storeSettings(): Observable<StoreSettings> {
+        const url = this.urls.generateStoreSettingsUrl();
+        return this.http.get<StoreSettings>(url);
     }
 
     private downloadModel<T>(contentType: string = null, filepath: string = null): Observable<T> {

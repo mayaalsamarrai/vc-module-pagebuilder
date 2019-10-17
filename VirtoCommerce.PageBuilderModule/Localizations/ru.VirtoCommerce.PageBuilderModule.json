@@ -1,0 +1,45 @@
+﻿{
+  "pageBuilder": {
+    "blades": {
+      "edit-page": {
+        "title": "Редактировать '{{name}}'",
+        "subtitle": "Редактирование страницы",
+        "title-new": "Новая страница",
+        "subtitle-new": "Создать новую страницу",
+        "subtitle-post": "Редактирование блога",
+        "title-new-post": "Новый пост",
+        "subtitle-new-post": "Создать новый пост",
+        "labels": {
+          "name": "Название",
+          "language": "Язык",
+          "drag-note": "Перетащите файлы сюда",
+          "progress": "Прогресс",
+          "markdown": "Markdown",
+          "metadata": "Метаданные"
+        },
+        "placeholders": {
+          "name": "Введите название",
+          "language": "Выбрать...",
+          "metadata": "Введите метаданные"
+        },
+        "validations": {
+          "pageName-invalid": "Название страницы может содержать буквенно-цифровые знаки, символы \"_\", \"-\" и \".\" "
+        }
+      },
+      "add-page": {
+        "title": "New",
+        "subtitle": "Choose what page you want to create",
+        "menu": {
+          "design-page": {
+            "title": "Design Page",
+            "description": "Use designer to create a new page."
+          },
+          "html-page": {
+            "title": "Html Page",
+            "description": "Use markdown or html to create a new page."
+          }
+        }
+      }
+    }
+  }
+}
