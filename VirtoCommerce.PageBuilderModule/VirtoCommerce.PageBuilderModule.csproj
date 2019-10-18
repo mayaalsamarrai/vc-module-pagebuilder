@@ -379,6 +379,16 @@
     <Error Condition="!Exists('..\packages\VirtoCommerce.Module.0.18.0\build\VirtoCommerce.Module.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\VirtoCommerce.Module.0.18.0\build\VirtoCommerce.Module.targets'))" />
   </Target>
   <Import Project="..\packages\VirtoCommerce.Module.0.18.0\build\VirtoCommerce.Module.targets" Condition="Exists('..\packages\VirtoCommerce.Module.0.18.0\build\VirtoCommerce.Module.targets')" />
+  <PropertyGroup>
+    <PreBuildEvent>cd $(SolutionDir)cms-designer
+call npm i 
+call npm run build
+</PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
