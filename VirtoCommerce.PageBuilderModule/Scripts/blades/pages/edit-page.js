@@ -131,6 +131,10 @@ angular.module('virtoCommerce.pageBuilderModule')
 
             function reloadPageAndSave(originFileName) {
                 blade.isLoading = true;
+                if (blade.isNew) {
+                    savePage();
+                    return;
+                }
                 contentApi.get({
                     contentType: $scope.blade.contentType,
                     storeId: $scope.blade.storeId,
@@ -141,30 +145,34 @@ angular.module('virtoCommerce.pageBuilderModule')
                     $scope.blade.currentEntity.blocks = page;
                     $scope.blade.currentEntity.name = originFileName;
                     $scope.blade.currentEntity.relativeUrl = ($scope.blade.parentBlade.currentEntity.relativeUrl || '') + '/' + originFileName;
-                    $scope.blade.currentEntity.content = JSON.stringify($scope.blade.currentEntity.blocks, null, 4);
-                    contentApi.saveMultipartContent({
-                        contentType: blade.contentType,
-                        storeId: blade.storeId,
-                        folderUrl: blade.folderUrl || ''
-                    }, $scope.blade.currentEntity,
-                        function () {
-                            blade.isLoading = false;
-                            blade.origEntity = angular.copy(blade.currentEntity);
-                            if (blade.isNew) {
-                                $scope.bladeClose();
-                                $rootScope.$broadcast("cms-statistics-changed", blade.storeId);
-                            }
-
-                            blade.parentBlade.refresh();
-                            if (blade.isNew) {
-                                runDesigner();
-                            }
-                        }, function (error) { bladeNavigationService.setError('Error ' + error.status, blade); });
+                        $scope.blade.currentEntity.content = JSON.stringify($scope.blade.currentEntity.blocks, null, 4);
+                        savePage();
                 }, function (error) {
                     var dialog = { id: "errorDetails" };
-                    dialog.message = error;
+                    dialog.message = error.message;
                     dialogService.showDialog(dialog, '$(Platform)/Scripts/app/modularity/dialogs/errorDetails-dialog.tpl.html', 'platformWebApp.confirmDialogController');
                 });
+            }
+
+            function savePage() {
+                contentApi.saveMultipartContent({
+                    contentType: blade.contentType,
+                    storeId: blade.storeId,
+                    folderUrl: blade.folderUrl || ''
+                }, $scope.blade.currentEntity,
+                    function () {
+                        blade.isLoading = false;
+                        blade.origEntity = angular.copy(blade.currentEntity);
+                        if (blade.isNew) {
+                            $scope.bladeClose();
+                            $rootScope.$broadcast("cms-statistics-changed", blade.storeId);
+                        }
+
+                        blade.parentBlade.refresh();
+                        if (blade.isNew) {
+                            runDesigner();
+                        }
+                    }, function (error) { bladeNavigationService.setError('Error ' + error.status, blade); });
             }
 
             blade.onClose = function (closeCallback) {
