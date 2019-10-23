@@ -1,0 +1,17 @@
+{
+	"folders": [
+        {
+            "path": "cms-designer"
+        },
+        {
+            "path": "store"
+        }
+    ],
+    "settings": {
+        "files.exclude": {
+            ".sonarlint": true,
+            ".vs": true,
+            ".vscode": true
+        }
+    }
+}
