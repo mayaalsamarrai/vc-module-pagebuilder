@@ -1,26 +1,9 @@
 const path = require('path');
-const webpack = require('webpack');
 
 const ROOT = path.resolve(__dirname, 'src');
 const DESTINATION = path.resolve(__dirname, 'dist');
 
-let platformUrl;
-const setupApi = function(env) {
-    switch (env.mode) {
-        case 'production':
-            platformUrl = "'https://admin.virtocommerce.com/'";
-            break;
-        case 'staging':
-            platformUrl = "'http://vc-admin-test.azurewebsites.net/'";
-            break;
-        case 'development':
-            platformUrl = "'http://localhost/'";
-            break;
-    }
-};
-
 module.exports = (env, argv) => {
-    setupApi(env);
     return {
         context: ROOT,
 
@@ -40,12 +23,6 @@ module.exports = (env, argv) => {
                 'node_modules'
             ]
         },
-
-        plugins: [
-            new webpack.DefinePlugin({
-                __PLATFORM_URL__: platformUrl
-            })
-        ],
 
         module: {
             rules: [
