@@ -21,11 +21,11 @@ namespace VirtoCommerce.PageBuilderModule.Controllers.Api
         }
 
         [HttpPost]
-        [Route("")]
+        [Route("reset")]
         [CheckPermission(Permission = "content:update")]
-        public IHttpActionResult RefreshPageInCache(string contentType, string storeId, string url)
+        public IHttpActionResult RefreshPageInCache(string contentType, string storeId)
         {
-            //this._cacheManager.
+            _cacheManager.ClearRegion($"content-{storeId}");
             return Ok();
         }
     }
