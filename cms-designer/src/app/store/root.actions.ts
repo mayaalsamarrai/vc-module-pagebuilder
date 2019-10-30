@@ -12,8 +12,7 @@ export enum RootActionTypes {
     ToggleFrames = '[Root] Toggle Frames',
     CloseEditors = '[Root] Close editors',
     TabIndexChanged = '[Root] Tab Index Changed',
-    SetPreviewUrl = '[Root] Set Preview Url',
-    ResetStorefrontCache = '[Root] Reset Storefront Cache'
+    SetPreviewUrl = '[Root] Set Preview Url'
 }
 
 export class ResetData implements Action {
@@ -77,12 +76,6 @@ export class SetPreviewUrl implements Action {
     constructor(public payload: string) { }
 }
 
-export class ResetStorefrontCache implements Action {
-    readonly type = RootActionTypes.ResetStorefrontCache;
-
-    constructor() { }
-}
-
 export type RootActions = ResetData
     | SaveData
     | LoadData
@@ -94,5 +87,4 @@ export type RootActions = ResetData
     | ToggleFrames
     | CloseEditors
     | TabIndexChanged
-    | SetPreviewUrl
-    | ResetStorefrontCache;
+    | SetPreviewUrl;
