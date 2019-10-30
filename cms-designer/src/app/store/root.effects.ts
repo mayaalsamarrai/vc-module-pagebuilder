@@ -96,19 +96,9 @@ export class RootEffects {
     saveData$: Observable<Action> = this.actions$.pipe(
         ofType<rootActions.SaveData>(rootActions.RootActionTypes.SaveData),
         switchMapTo([
-            new editorActions.SavePage(),
-            new rootActions.ResetStorefrontCache()
+            new editorActions.SavePage()
             // new themeActions.SaveTheme()
         ])
-    );
-
-    @Effect({ dispatch: false })
-    resetStorefrontCache = this.actions$.pipe(
-        ofType<rootActions.ResetStorefrontCache>(rootActions.RootActionTypes.ResetStorefrontCache),
-        withLatestFrom(this.rootStore$.select(fromRoot.getPrimaryFrameId)),
-        tap(([, frameId]) => {
-            this.preview.resetCache(frameId);
-        })
     );
 
     @Effect()
