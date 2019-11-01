@@ -4,6 +4,7 @@ export enum RootActionTypes {
     ResetData = '[Root] Reset Data',
     SaveData = '[Root] Save Data',
     LoadData = '[Root] Load Data',
+    ResetCache = '[Root] Reset Cache',
     PreviewLoading = '[Root] Preview Loading',
     PreviewReady = '[Root] Preview is Ready',
     PreviewError = '[Root] Preview in Error mode',
@@ -25,6 +26,10 @@ export class SaveData implements Action {
 
 export class LoadData implements Action {
     readonly type = RootActionTypes.LoadData;
+}
+
+export class ResetCache implements Action {
+    readonly type = RootActionTypes.ResetCache;
 }
 
 export class PreviewLoading implements Action {
@@ -79,6 +84,7 @@ export class SetPreviewUrl implements Action {
 export type RootActions = ResetData
     | SaveData
     | LoadData
+    | ResetCache
     | PreviewLoading
     | PreviewReady
     | PreviewError

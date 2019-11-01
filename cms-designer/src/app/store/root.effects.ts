@@ -7,7 +7,7 @@ import {
     switchMapTo, debounceTime, distinctUntilChanged,
     withLatestFrom, tap, filter, map, switchMap, mapTo, timeout, catchError
 } from 'rxjs/operators';
-import { PreviewService, ApiUrlsService } from '@app/services';
+import { PreviewService, ApiUrlsService, PlatformService } from '@app/services';
 import { MessageService } from '@shared/services';
 import { BlockValuesModel } from '@shared/models';
 
@@ -24,6 +24,7 @@ import * as fromEditor from '@editor/store';
 export class RootEffects {
     constructor(private actions$: Actions,
         private preview: PreviewService,
+        private platform: PlatformService,
         private errors: MessageService,
         private urls: ApiUrlsService,
         private rootStore$: Store<fromRoot.State>,
@@ -96,8 +97,9 @@ export class RootEffects {
     saveData$: Observable<Action> = this.actions$.pipe(
         ofType<rootActions.SaveData>(rootActions.RootActionTypes.SaveData),
         switchMapTo([
-            new editorActions.SavePage()
-            // new themeActions.SaveTheme()
+            new editorActions.SavePage(),
+            // new themeActions.SaveTheme(),
+            new rootActions.ResetCache()
         ])
     );
 
@@ -118,6 +120,14 @@ export class RootEffects {
         ofType<rootActions.PreviewError>(rootActions.RootActionTypes.PreviewError),
         tap(action => {
             console.log(action.payload);
+        })
+    );
+
+    @Effect({dispatch: false})
+    resetCache = this.actions$.pipe(
+        ofType<rootActions.ResetCache>(rootActions.RootActionTypes.ResetCache),
+        tap(() => {
+            this.platform.resetCache();
         })
     );
 
