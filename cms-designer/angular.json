@@ -85,7 +85,7 @@
                             "extractLicenses": true,
                             "vendorChunk": false,
                             "buildOptimizer": false,
-                            "outputPath": "../../vc-platform/VirtoCommerce.Platform.Web/Modules/VirtoCommerce.PageBuilderModule/Content/builder/",
+                            "outputPath": "../VirtoCommerce.PageBuilderModule/Content/builder/",
                             "resourcesOutputPath": "assets",
                             "watch": true
                         },

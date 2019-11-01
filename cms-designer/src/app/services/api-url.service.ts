@@ -40,7 +40,7 @@ export class ApiUrlsService {
     }
 
     generateResetCacheUrl(): string {
-        const url = `${this.params.platformUrl}/api/content/${this.params.contentType}/${this.params.storeId}/reset`;
+        const url = `${this.params.platformUrl}/api/pagebuilder/content/reset`;
         return url;
     }
 

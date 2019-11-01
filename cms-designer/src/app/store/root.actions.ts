@@ -1,6 +1,7 @@
 import { Action } from '@ngrx/store';
 
 export enum RootActionTypes {
+    EmptyAction = '[Root] Empty Action',
     ResetData = '[Root] Reset Data',
     SaveData = '[Root] Save Data',
     LoadData = '[Root] Load Data',
@@ -14,6 +15,10 @@ export enum RootActionTypes {
     CloseEditors = '[Root] Close editors',
     TabIndexChanged = '[Root] Tab Index Changed',
     SetPreviewUrl = '[Root] Set Preview Url'
+}
+
+export class EmptyAction implements Action {
+    readonly type = RootActionTypes.EmptyAction;
 }
 
 export class ResetData implements Action {
@@ -81,7 +86,8 @@ export class SetPreviewUrl implements Action {
     constructor(public payload: string) { }
 }
 
-export type RootActions = ResetData
+export type RootActions = EmptyAction
+    | ResetData
     | SaveData
     | LoadData
     | ResetCache
