@@ -123,11 +123,11 @@ export class RootEffects {
         })
     );
 
-    @Effect({dispatch: false})
+    @Effect()
     resetCache = this.actions$.pipe(
         ofType<rootActions.ResetCache>(rootActions.RootActionTypes.ResetCache),
-        tap(() => {
-            this.platform.resetCache();
+        switchMap(() => {
+            return this.platform.resetCache().pipe(map(() => new rootActions.EmptyAction()));
         })
     );
 

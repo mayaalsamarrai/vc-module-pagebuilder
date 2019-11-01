@@ -5,12 +5,13 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.Description;
 using CacheManager.Core;
 using VirtoCommerce.Platform.Core.Web.Security;
 
 namespace VirtoCommerce.PageBuilderModule.Controllers.Api
 {
-    [RoutePrefix("api/content/{contentType}/{storeId}")]
+    [RoutePrefix("api/pagebuilder/content")]
     public class PageBuilderController : ApiController
     {
         private readonly ICacheManager<object> _cacheManager;
@@ -23,7 +24,8 @@ namespace VirtoCommerce.PageBuilderModule.Controllers.Api
         [HttpPost]
         [Route("reset")]
         [CheckPermission(Permission = "content:update")]
-        public IHttpActionResult RefreshPageInCache(string contentType, string storeId)
+        [ResponseType(typeof(void))]
+        public IHttpActionResult RefreshPageInCache()
         {
             _cacheManager.Clear();
             return Ok();
