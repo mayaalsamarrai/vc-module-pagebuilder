@@ -38,6 +38,12 @@ export class ApiUrlsService {
         const url = `${this.params.platformUrl}/${assetEndpoint}?folderUrl=blogs&name=${name}`;
         return url;
     }
+
+    generateResetCacheUrl(): string {
+        const url = `${this.params.platformUrl}/api/content/${this.params.contentType}/${this.params.storeId}/reset`;
+        return url;
+    }
+
     generateUploadUrl(contentType: string = null, pathToUpload: string = null): string {
         const path = encodeURIComponent(pathToUpload || this.params.uploadPath);
         const type = contentType || this.params.contentType;

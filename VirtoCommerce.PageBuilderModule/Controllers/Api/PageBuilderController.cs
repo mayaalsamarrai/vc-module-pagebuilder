@@ -25,7 +25,7 @@ namespace VirtoCommerce.PageBuilderModule.Controllers.Api
         [CheckPermission(Permission = "content:update")]
         public IHttpActionResult RefreshPageInCache(string contentType, string storeId)
         {
-            _cacheManager.ClearRegion($"content-{storeId}");
+            _cacheManager.Clear();
             return Ok();
         }
     }

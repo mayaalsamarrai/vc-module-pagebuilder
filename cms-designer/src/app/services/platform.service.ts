@@ -38,6 +38,11 @@ export class PlatformService {
         return this.downloadModel<BlocksSchema>('themes', '/default/config/blocks_schema.json');
     }
 
+    resetCache(): Observable<any> {
+        const url = this.urls.generateResetCacheUrl();
+        return this.http.post(url, {});
+    }
+
     initSettings(): Promise<any> {
         const parameters = {};
         parameters['StorePreviewPath'] = 'storePreviewPath';
