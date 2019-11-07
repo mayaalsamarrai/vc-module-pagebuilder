@@ -22,3 +22,8 @@ export interface StoreSettings {
     url: string;
     secureUrl: string;
 }
+
+export interface ModuleSettings {
+    id: string;
+    version: string;
+}
