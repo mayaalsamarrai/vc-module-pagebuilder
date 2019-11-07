@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <module>
   <id>VirtoCommerce.PageBuilderModule</id>
-  <version>1.0.7</version>
+  <version>1.0.8</version>
   <platformVersion>2.13.20</platformVersion>
   <dependencies>
     <dependency id="VirtoCommerce.Core" version="2.24.6" />
@@ -9,17 +9,26 @@
   </dependencies>
 
   <title>CMS Page Builder</title>
-  <description>Enter your module description here.</description>
+  <description>Compose pages in visual page builder.</description>
   <authors>
-    <author>VirtoCommerce</author>
+    <author>Virto Commerce</author>
   </authors>
+  <owners>
+    <owner>Virto Commerce</owner>
+  </owners>
+  
+  <!--<projectUrl>https://virtocommerce.com/apps/extensions/virto-catalog-module</projectUrl>
+  <iconUrl>https://github.com/VirtoCommerce/vc-module-catalog/raw/master/VirtoCommerce.CatalogModule.Web/Content/logo.png</iconUrl>
+  <releaseNotes>First version.</releaseNotes>
+  
+  -->
+  <copyright>Copyright © 2011-2019 Virto Commerce. All rights reserved</copyright>
+  <tags>cms content pagebuilder</tags>
 
   <assemblyFile>VirtoCommerce.PageBuilderModule.dll</assemblyFile>
   <moduleType>VirtoCommerce.PageBuilderModule.Module, VirtoCommerce.PageBuilderModule</moduleType>
 
-  <styles>
-    <!--<directory virtualPath="$/Content/css" searchPattern="*.css" searchSubdirectories="true" />-->
-  </styles>
+  <styles></styles>
   <scripts>
     <directory virtualPath="$/Scripts" searchPattern="*.js" searchSubdirectories="true" />
   </scripts>
@@ -33,27 +42,6 @@
         <title>Store preview path</title>
         <description>Relative path for preview page</description>
       </setting>
-      <!--<setting>
-                <name>VirtoCommerce.PageBuilderModule.General.ContentCssPath</name>
-                <valueType>string</valueType>
-                <defaultValue>/themes/assets/style.min.css</defaultValue>
-                <title>Integer</title>
-                <description>An integer setting</description>
-            </setting>-->
-      <!--<setting>
-                <name>VirtoCommerce.PageBuilderModule.General.BaseUrl</name>
-                <valueType>string</valueType>
-                <defaultValue>/designer/</defaultValue>
-                <title>Integer</title>
-                <description>An integer setting</description>
-            </setting>-->
-      <!--<setting>
-                <name>VirtoCommerce.PageBuilderModule.General.PlatformUrl</name>
-                <valueType>string</valueType>
-                <defaultValue></defaultValue>
-                <title>Platform base url</title>
-                <description></description>
-            </setting>-->
       <setting>
         <name>VirtoCommerce.PageBuilderModule.General.TokenUrl</name>
         <valueType>string</valueType>
@@ -62,33 +50,14 @@
         <description></description>
       </setting>
     </group>
-    <!--<group name="Advanced">
-            <setting>
-                <name>VirtoCommerce.PageBuilderModule.Advanced.Boolean1</name>
-                <valueType>boolean</valueType>
-                <defaultValue>true</defaultValue>
-                <title>Boolean1</title>
-                <description>A boolean setting</description>
-            </setting>
-            <setting>
-                <name>VirtoCommerce.PageBuilderModule.Advanced.Boolean2</name>
-                <valueType>boolean</valueType>
-                <defaultValue>false</defaultValue>
-                <title>Boolean2</title>
-                <description>A boolean setting</description>
-            </setting>
-            <setting>
-                <name>VirtoCommerce.PageBuilderModule.Advanced.Select</name>
-                <valueType>string</valueType>
-                <allowedValues>
-                    <value>qwerty</value>
-                    <value>asdfgh</value>
-                    <value>zxcvb</value>
-                </allowedValues>
-                <defaultValue>asdfgh</defaultValue>
-                <title>Select</title>
-                <description>Select one of the allowed values</description>
-            </setting>
-        </group>-->
   </settings>
+  <permissions>
+    <group name="Content">
+      <permission id="content:access" name="Open store content menu" description=""/>
+      <permission id="content:create" name="Create store content data" description=""/>
+      <permission id="content:read" name="View store content data" description=""/>
+      <permission id="content:update" name="Update store content data" description=""/>
+      <permission id="content:delete" name="Delete store content data" description=""/>
+    </group>
+  </permissions>
 </module>
