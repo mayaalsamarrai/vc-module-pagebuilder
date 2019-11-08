@@ -4,7 +4,7 @@ import { BaseControlComponent } from '../base-control.component';
 import { FileItemControlDescriptor } from '@shared/models';
 
 @Component({
-    selector: 'file-item',
+    selector: 'app-file-item',
     templateUrl: './file-item.component.html',
     styleUrls: ['./file-item.component.scss']
 })

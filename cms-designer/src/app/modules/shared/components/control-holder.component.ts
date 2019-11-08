@@ -91,9 +91,4 @@ export class ControlHolderComponent implements OnInit, ControlValueAccessor {
             this.component.onTouched = fn;
         }
     }
-
-    get changeDetection() {
-        console.log(1);
-        return true;
-    }
 }
