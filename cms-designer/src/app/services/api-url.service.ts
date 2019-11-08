@@ -40,7 +40,8 @@ export class ApiUrlsService {
 
     generateUploadAssetUrl(name: string): string {
         const assetEndpoint = `api/content/${this.params.contentType}/${this.params.storeId}`;
-        const url = this.combine(this.params.platformUrl, assetEndpoint) + `?folderUrl=assets%2Fpages&name=${name}`;
+        const url = this.combine(this.params.platformUrl, assetEndpoint) +
+                `?folderUrl=${encodeURIComponent(AppSettings.assetsPath)}&name=${name}`;
         return url;
     }
 
@@ -59,6 +60,13 @@ export class ApiUrlsService {
     getAssetsUrl(relativeUrl: string): string {
         const url = this.combine(AppSettings.storeBaseUrl, relativeUrl);
         return url;
+    }
+
+    getAssetsRelativeUrl(filename: string): string {
+        if (AppSettings.assetsPath.startsWith('/assets') || AppSettings.assetsPath.startsWith('assets')) {
+            return this.combine('/', AppSettings.assetsPath, filename);
+        }
+        return this.combine('/assets/', AppSettings.assetsPath, filename);
     }
 
     getStoreUrl(layout: string): string {
@@ -126,6 +134,9 @@ export class ApiUrlsService {
 
     private combine(...parts: string[]): string {
         const result = parts.reduce((acc, part, index) => {
+            if (part === null || part === '') {
+                return acc;
+            }
             if (index === 0) {
                 return part;
             }
@@ -136,7 +147,7 @@ export class ApiUrlsService {
                 return acc + '/' + part;
             }
             return acc + part;
-        });
+        }, '');
         return result;
     }
 }

@@ -49,6 +49,7 @@ export class PlatformService {
         const parameters = {};
         parameters['StorePreviewPath'] = 'storePreviewPath';
         parameters['TokenUrl'] = 'tokenUrl';
+        parameters['AssetsPath'] = 'assetsPath';
         return combineLatest([this.moduleSettings(), this.storeSettings(), this.moduleVersion()]).pipe(
             tap(([moduleSettings, storeSettings, version]) => {
                 moduleSettings.forEach(x => {
