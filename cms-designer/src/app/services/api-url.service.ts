@@ -39,8 +39,8 @@ export class ApiUrlsService {
     }
 
     generateUploadAssetUrl(name: string): string {
-        const assetEndpoint = 'api/platform/assets';
-        const url = this.combine(this.params.platformUrl, assetEndpoint) + `?folderUrl=blogs&name=${name}`;
+        const assetEndpoint = `api/content/${this.params.contentType}/${this.params.storeId}`;
+        const url = this.combine(this.params.platformUrl, assetEndpoint) + `?folderUrl=assets%2Fpages&name=${name}`;
         return url;
     }
 
@@ -53,6 +53,11 @@ export class ApiUrlsService {
         const path = encodeURIComponent(pathToUpload || this.params.uploadPath);
         const url = this.combine(this.params.platformUrl, '/api/content/', contentType || this.params.contentType, this.params.storeId)
             + `?folderUrl=${path}`;
+        return url;
+    }
+
+    getAssetsUrl(relativeUrl: string): string {
+        const url = this.combine(AppSettings.storeBaseUrl, relativeUrl);
         return url;
     }
 

@@ -49,6 +49,13 @@
         <title>AuthToken url</title>
         <description></description>
       </setting>
+      <!--<setting>
+        <name>VirtoCommerce.PageBuilderModule.General.AssetsPath</name>
+        <valueType>string</valueType>
+        <defaultValue></defaultValue>
+        <title>AuthToken url</title>
+        <description></description>
+      </setting>-->
     </group>
   </settings>
   <permissions>
