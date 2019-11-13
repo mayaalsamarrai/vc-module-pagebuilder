@@ -1,13 +1,15 @@
+import { ModuleSettings } from './../models/environment.settings';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, combineLatest } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { tap, map } from 'rxjs/operators';
 import { ApiUrlsService } from './api-url.service';
 import { PresetsModel } from '@themes/models';
 import { BlockValuesModel, BlocksSchema } from '@shared/models';
 import { PlatformSetting, StoreSettings } from '@app/models';
 
 import { AppSettings } from './app.settings';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class PlatformService {
@@ -47,15 +49,25 @@ export class PlatformService {
         const parameters = {};
         parameters['StorePreviewPath'] = 'storePreviewPath';
         parameters['TokenUrl'] = 'tokenUrl';
-        return combineLatest([this.moduleSettings(), this.storeSettings()]).pipe(
-            tap(([moduleSettings, storeSettings]) => {
+        parameters['AssetsPath'] = 'assetsPath';
+        return combineLatest([this.moduleSettings(), this.storeSettings(), this.moduleVersion()]).pipe(
+            tap(([moduleSettings, storeSettings, version]) => {
                 moduleSettings.forEach(x => {
                     const key = x.name.replace('VirtoCommerce.PageBuilderModule.General.', '');
                     AppSettings[parameters[key]] = x.value || x.defaultValue;
                 });
                 AppSettings.storeBaseUrl = storeSettings.secureUrl || storeSettings.url;
+                environment.version = version;
             })
         ).toPromise();
+    }
+
+    private moduleVersion(): Observable<string> {
+        const url = this.urls.generateModulesUrl();
+        return this.http.get<ModuleSettings[]>(url).pipe(
+            map(x => x.find(m => m.id === 'VirtoCommerce.PageBuilderModule')),
+            map(x => x.version)
+        );
     }
 
     private moduleSettings(): Observable<PlatformSetting[]> {

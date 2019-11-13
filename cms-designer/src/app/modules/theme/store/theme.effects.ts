@@ -29,7 +29,7 @@ export class ThemeEffects {
     @Effect()
     loadPresets$: Observable<Action> = this.actions$.pipe(
         ofType<themeActions.LoadThemes>(themeActions.ThemeActionTypes.LoadThemes),
-        mergeMap(() =>
+        switchMap(() =>
             this.themeService.loadPresets().pipe(
                 map(data => new themeActions.LoadThemesSuccess(data)),
                 catchError(error => of(new themeActions.LoadThemesFail(error)))
@@ -40,7 +40,7 @@ export class ThemeEffects {
     @Effect()
     loadSchema$: Observable<Action> = this.actions$.pipe(
         ofType<themeActions.LoadSchema>(themeActions.ThemeActionTypes.LoadSchema),
-        mergeMap(() =>
+        switchMap(() =>
             this.themeService.loadSchema().pipe(
                 map(data => new themeActions.LoadSchemaSuccess(data)),
                 catchError(error => of(new themeActions.LoadSchemaFail(error)))

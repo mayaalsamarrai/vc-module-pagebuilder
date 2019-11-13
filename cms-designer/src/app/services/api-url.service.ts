@@ -17,43 +17,64 @@ export class ApiUrlsService {
     constructor(private cookies: CookieService, private windowRef: WindowRef) { }
 
     generateSettingsUrl() {
-        const url = `${this.params.platformUrl}/api/platform/settings/modules/VirtoCommerce.PageBuilderModule`;
+        const url = this.combine(this.params.platformUrl, '/api/platform/settings/modules/VirtoCommerce.PageBuilderModule');
+        return url;
+    }
+
+    generateModulesUrl() {
+        const url = this.combine(this.params.platformUrl, '/api/platform/modules');
         return url;
     }
 
     generateStoreSettingsUrl() {
-        const url = `${this.params.platformUrl}/api/stores/${this.params.storeId}`;
+        const url = this.combine(this.params.platformUrl, '/api/stores/', this.params.storeId);
         return url;
     }
 
     generateDownloadUrl(contentType: string, filepath: string): string {
         const path = encodeURIComponent(filepath || this.params.path);
-        const url = `${this.params.platformUrl}/api/content/${contentType || this.params.contentType}/${this.params.storeId}`
+        const url = this.combine(this.params.platformUrl, '/api/content/', contentType || this.params.contentType, this.params.storeId)
             + `?relativeUrl=${path}`;
         return url;
     }
 
     generateUploadAssetUrl(name: string): string {
-        const assetEndpoint = 'api/platform/assets';
-        const url = `${this.params.platformUrl}/${assetEndpoint}?folderUrl=blogs&name=${name}`;
+        const assetEndpoint = `api/content/${this.params.contentType}/${this.params.storeId}`;
+        const url = this.combine(this.params.platformUrl, assetEndpoint) +
+                `?folderUrl=${encodeURIComponent(AppSettings.assetsPath)}&name=${name}`;
         return url;
     }
 
     generateResetCacheUrl(): string {
-        const url = `${this.params.platformUrl}/api/pagebuilder/content/reset`;
+        const url = this.combine(this.params.platformUrl, '/api/pagebuilder/content/reset');
         return url;
     }
 
     generateUploadUrl(contentType: string = null, pathToUpload: string = null): string {
         const path = encodeURIComponent(pathToUpload || this.params.uploadPath);
-        const type = contentType || this.params.contentType;
-        const url = `${this.params.platformUrl}/api/content/${type}/${this.params.storeId}?folderUrl=${path}`;
+        const url = this.combine(this.params.platformUrl, '/api/content/', contentType || this.params.contentType, this.params.storeId)
+            + `?folderUrl=${path}`;
         return url;
     }
 
+    getAssetsUrl(relativeUrl: string): string {
+        const url = this.combine(AppSettings.storeBaseUrl, relativeUrl);
+        return url;
+    }
+
+    getAssetsRelativeUrl(filename: string): string {
+        if (AppSettings.assetsPath.startsWith('/assets') || AppSettings.assetsPath.startsWith('assets')) {
+            return this.combine('/', AppSettings.assetsPath, filename);
+        }
+        return this.combine('/assets/', AppSettings.assetsPath, filename);
+    }
+
     getStoreUrl(layout: string): string {
-        const query = `?preview_mode=${this.getCurrentSessionId()}${!!layout ? '&layout=' + layout : ''}`;
-        const url = `${AppSettings.storeBaseUrl}${AppSettings.storePreviewPath}${query}`;
+        // preview_mode used for key in preview theme
+        // layout for choose base layout
+        // ep is endpoint for platform
+        const query = `?preview_mode=${this.getCurrentSessionId()}${!!layout ? '&layout=' + layout : ''}&ep=${this.params.platformUrl}`;
+        const url = this.combine(AppSettings.storeBaseUrl, AppSettings.storePreviewPath) + query;
         return url;
     }
 
@@ -68,15 +89,9 @@ export class ApiUrlsService {
         return givenFilename || this.params.filename;
     }
 
-    getCategoriesEndPoint(): string {
-        // /admin/api/catalog/listentries
-        const url = `${this.params.platformUrl}/api/catalog/listentries`;
-        return url;
-    }
-
     getStoresEndPoint(): string {
         // /admin/api/stores/{Electronics}
-        const url = `${this.params.platformUrl}/api/stores/${this.params.storeId}`;
+        const url = this.combine(this.params.platformUrl, '/api/stores/', this.params.storeId);
         return url;
     }
 
@@ -117,6 +132,25 @@ export class ApiUrlsService {
     private getPlatformUrl(): string {
         const url = this.windowRef.nativeWindow.location.href;
         const result = url.substr(0, url.indexOf(environment.moduleLocation));
+        return result;
+    }
+
+    private combine(...parts: string[]): string {
+        const result = parts.reduce((acc, part, index) => {
+            if (part === null || part === '') {
+                return acc;
+            }
+            if (index === 0) {
+                return part;
+            }
+            if (acc.endsWith('/') && part.startsWith('/')) {
+                return acc + part.substr(1);
+            }
+            if (!acc.endsWith('/') && !part.startsWith('/')) {
+                return acc + '/' + part;
+            }
+            return acc + part;
+        }, '');
         return result;
     }
 }

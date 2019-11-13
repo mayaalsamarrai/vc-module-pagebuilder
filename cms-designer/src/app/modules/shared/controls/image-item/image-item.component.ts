@@ -1,7 +1,8 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
+import { ApiUrlsService } from '@app/services';
 import { FilesService } from '@shared/services';
 import { BaseControlComponent } from '../base-control.component';
-import { ImageControlDescriptor } from '@shared/models';
+import { ImageControlDescriptor, ImageDescriptor } from '@shared/models';
 
 @Component({
     selector: 'app-image-item',
@@ -12,7 +13,7 @@ export class ImageItemComponent extends BaseControlComponent<ImageControlDescrip
 
     @ViewChild('fileInput', { read: ElementRef }) fileInput: ElementRef;
 
-    constructor(private files: FilesService) {
+    constructor(private files: FilesService, private urls: ApiUrlsService) {
         super();
     }
 
@@ -36,6 +37,10 @@ export class ImageItemComponent extends BaseControlComponent<ImageControlDescrip
         };
     }
 
+    getAssetUrl(): string {
+        return this.urls.getAssetsUrl(this.value.url);
+    }
+
     changeAlt(value: string) {
         this.setValue({ altText: value });
         this.onChange(this.value);
@@ -56,22 +61,11 @@ export class ImageItemComponent extends BaseControlComponent<ImageControlDescrip
         this.onChange(this.value);
     }
 
-    setValue(value: ImageDescriptor|string) {
-        // TODO: remove before relese. used for backward compatibility when develop
-        if (typeof value === 'string') {
-            value = { url: value };
-        }
+    setValue(value: ImageDescriptor) {
         const result = { ...this.value, ...value };
         if (!result.altText) {
             result.altText = null;
         }
         super.setValue(result);
     }
-}
-
-interface ImageDescriptor {
-    url?: string;
-    width?: number;
-    height?: number;
-    altText?: string;
 }

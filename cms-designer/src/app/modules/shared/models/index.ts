@@ -16,3 +16,4 @@ export * from './page.descriptor';
 export * from './block-values.model';
 export * from './url-control.descriptor';
 export * from './file-item-control.descriptor';
+export * from './image.descriptor';
