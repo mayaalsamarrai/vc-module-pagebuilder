@@ -11,7 +11,7 @@ import { ReturnStatement } from '@angular/compiler';
 })
 export class BlockFormComponent implements OnInit, OnDestroy {
     private _model: BlockValuesModel;
-    private _schema: BlocksSchema;
+    private _schema: BlocksSchema | BlockSchema;
 
     @Input() context: any;
 
@@ -28,15 +28,15 @@ export class BlockFormComponent implements OnInit, OnDestroy {
 
     get settings() {
         if (this.model && this.schema) {
-            return this.schema[this.model.type].settings;
+            return this.model.type ? this.schema[this.model.type].settings : this.schema.settings;
         }
         return null;
     }
 
-    @Input() get schema(): BlocksSchema { // схема редактируемого блока
+    @Input() get schema(): BlocksSchema | BlockSchema { // схема редактируемого блока
         return this._schema;
     }
-    set schema(value: BlocksSchema) {
+    set schema(value: BlocksSchema | BlockSchema) {
         if (this._schema !== value) {
             this._schema = value;
             console.log('schema');
@@ -66,8 +66,8 @@ export class BlockFormComponent implements OnInit, OnDestroy {
     private createForm() {
         const m = this.model;
         if (m && this.schema) {
-            const s = this.schema[m.type];
-            if (s && m.type === s.type) {
+            const s = m.type ? this.schema[m.type] : this.schema;
+            if (s && (!m.type || m.type === s.type)) {
                 if (this.subscription != null) {
                     this.subscription.unsubscribe();
                     this.subscription = null;

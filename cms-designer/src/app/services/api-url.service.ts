@@ -70,7 +70,10 @@ export class ApiUrlsService {
     }
 
     getStoreUrl(layout: string): string {
-        const query = `?preview_mode=${this.getCurrentSessionId()}${!!layout ? '&layout=' + layout : ''}`;
+        // preview_mode used for key in preview theme
+        // layout for choose base layout
+        // ep is endpoint for platform
+        const query = `?preview_mode=${this.getCurrentSessionId()}${!!layout ? '&layout=' + layout : ''}&ep=${this.params.platformUrl}`;
         const url = this.combine(AppSettings.storeBaseUrl, AppSettings.storePreviewPath) + query;
         return url;
     }
