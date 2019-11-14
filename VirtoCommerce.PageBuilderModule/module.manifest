@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <module>
   <id>VirtoCommerce.PageBuilderModule</id>
-  <version>1.0.8</version>
+  <version>1.0.9</version>
   <platformVersion>2.13.20</platformVersion>
   <dependencies>
     <dependency id="VirtoCommerce.Core" version="2.24.6" />
@@ -25,8 +25,8 @@
   <copyright>Copyright © 2011-2019 Virto Commerce. All rights reserved</copyright>
   <tags>cms content pagebuilder</tags>
 
-  <assemblyFile>VirtoCommerce.PageBuilderModule.dll</assemblyFile>
-  <moduleType>VirtoCommerce.PageBuilderModule.Module, VirtoCommerce.PageBuilderModule</moduleType>
+  <!--<assemblyFile>VirtoCommerce.PageBuilderModule.dll</assemblyFile>
+  <moduleType>VirtoCommerce.PageBuilderModule.Module, VirtoCommerce.PageBuilderModule</moduleType>-->
 
   <styles></styles>
   <scripts>
@@ -58,7 +58,7 @@
       </setting>
     </group>
   </settings>
-  <permissions>
+  <!--<permissions>
     <group name="Content">
       <permission id="content:access" name="Open store content menu" description=""/>
       <permission id="content:create" name="Create store content data" description=""/>
@@ -66,5 +66,5 @@
       <permission id="content:update" name="Update store content data" description=""/>
       <permission id="content:delete" name="Delete store content data" description=""/>
     </group>
-  </permissions>
+  </permissions>-->
 </module>

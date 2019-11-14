@@ -45,11 +45,6 @@ export class ApiUrlsService {
         return url;
     }
 
-    generateResetCacheUrl(): string {
-        const url = this.combine(this.params.platformUrl, '/api/pagebuilder/content/reset');
-        return url;
-    }
-
     generateUploadUrl(contentType: string = null, pathToUpload: string = null): string {
         const path = encodeURIComponent(pathToUpload || this.params.uploadPath);
         const url = this.combine(this.params.platformUrl, '/api/content/', contentType || this.params.contentType, this.params.storeId)

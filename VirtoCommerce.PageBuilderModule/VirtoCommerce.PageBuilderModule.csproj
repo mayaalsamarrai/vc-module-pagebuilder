@@ -126,9 +126,6 @@
     <Content Include="Scripts\resources\VirtoCommerce.PageBuilderModuleApi.js" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\Api\PageBuilderController.cs" />
-    <Compile Include="Module.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
