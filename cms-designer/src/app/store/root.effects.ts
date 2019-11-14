@@ -98,8 +98,7 @@ export class RootEffects {
         ofType<rootActions.SaveData>(rootActions.RootActionTypes.SaveData),
         switchMapTo([
             new editorActions.SavePage(),
-            new themeActions.SaveTheme(),
-            new rootActions.ResetCache()
+            new themeActions.SaveTheme()
         ])
     );
 
@@ -120,14 +119,6 @@ export class RootEffects {
         ofType<rootActions.PreviewError>(rootActions.RootActionTypes.PreviewError),
         tap(action => {
             console.log(action.payload);
-        })
-    );
-
-    @Effect()
-    resetCache = this.actions$.pipe(
-        ofType<rootActions.ResetCache>(rootActions.RootActionTypes.ResetCache),
-        switchMap(() => {
-            return this.platform.resetCache().pipe(map(() => new rootActions.EmptyAction()));
         })
     );
 
