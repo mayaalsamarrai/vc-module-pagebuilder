@@ -17,7 +17,7 @@ export class FilesService {
         const form = new FormData();
         form.append('uploadedFile', file, name);
         return this.http.post<FileDescriptor[]>(url, form).pipe(
-            map(x => x[0].url)
+            map(x => this.urls.getAssetsRelativeUrl(name))
         );
     }
 

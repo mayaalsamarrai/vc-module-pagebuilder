@@ -5,7 +5,7 @@
 export const environment = {
     production: false,
     moduleLocation: '/Modules/VirtoCommerce.PageBuilderModule/Content/builder/',
-    version: '0.0.3'
+    version: ''
 };
 
 /*

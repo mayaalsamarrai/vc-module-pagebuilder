@@ -5,6 +5,7 @@ export interface EnvironmentSettings {
     baseUrl: string;
     tokenUrl: string;
     previewTimeout: number;
+    assetsPath: string;
 }
 
 export interface PlatformSetting {
@@ -21,4 +22,9 @@ export interface PlatformSetting {
 export interface StoreSettings {
     url: string;
     secureUrl: string;
+}
+
+export interface ModuleSettings {
+    id: string;
+    version: string;
 }

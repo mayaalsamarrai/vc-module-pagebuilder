@@ -2,7 +2,9 @@
     <div class="preset-list">
         <div *ngFor="let item of data.presets|keyvalue"
             class="preset-list__item" [class.preset-list__item--active]="item.key == current"
-            [ngStyle]="{ 'background-image': getThemeThumb(item.key)}" (click)="selectPreset(item.key)"></div>
+            [ngStyle]="{ 'background-image': getThemeThumb(item.key), border: '1px solid black', display: 'flex'}" (click)="selectPreset(item.key)">
+            <div style="font-size: 3rem; vertical-align: middle;">{{ item.key }}</div>
+        </div>
     </div>
     <p>Changing your theme's style will affect both the settings and look and feel of your store.</p>
     <p>Some settings will be lost when you change your style, but you will not lose any content from your store.</p>

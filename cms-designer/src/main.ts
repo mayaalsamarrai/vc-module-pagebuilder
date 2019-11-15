@@ -17,4 +17,6 @@ platformBrowserDynamic().bootstrapModule(AppModule)
             enableDebugTools(componentRef);
         }
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+        console.log(err);
+    });

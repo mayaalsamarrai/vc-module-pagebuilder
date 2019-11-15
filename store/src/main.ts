@@ -3,7 +3,7 @@ import { ServiceLocator } from './service-locator';
 
 document.addEventListener('DOMContentLoaded', () => {
     console.log('run preview window')
-    Environment.DesignerUrl = window['__designer_preview__'];
+    Environment.DesignerUrl = window.location.search.substr(1).split('&').find(q => q.startsWith('ep=')).substr(3);
     const app = ServiceLocator.createApp();
     app.run();
 });

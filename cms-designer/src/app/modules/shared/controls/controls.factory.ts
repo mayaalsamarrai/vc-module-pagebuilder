@@ -2,13 +2,13 @@ import { Type, Injectable } from '@angular/core';
 import {
     CheckboxItemComponent,
     ColorItemComponent,
+    FileItemComponent,
     ImageItemComponent,
     NumberItemComponent,
     SelectItemComponent,
     StringItemComponent,
     TextItemComponent,
-    UrlItemComponent,
-    FileItemComponent
+    UrlItemComponent
 } from '.';
 
 @Injectable({
@@ -20,13 +20,13 @@ export class ControlsFactory {
     constructor() {
         this.controls['checkbox'] = CheckboxItemComponent;
         this.controls['color'] = ColorItemComponent;
+        this.controls['file'] = FileItemComponent;
         this.controls['image'] = ImageItemComponent;
         this.controls['number'] = NumberItemComponent;
         this.controls['select'] = SelectItemComponent;
         this.controls['string'] = StringItemComponent;
         this.controls['text'] = TextItemComponent;
         this.controls['url'] = UrlItemComponent;
-        this.controls['file'] = FileItemComponent;
     }
 
     resolve(type: string): Type<any> {

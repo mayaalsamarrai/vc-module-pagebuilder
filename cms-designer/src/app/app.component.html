@@ -11,7 +11,7 @@
             <app-toolbar [buttons]="['desktop', 'mobile', 'tablet', 'full']" [activeButton]="viewMode"
                 (buttonClick)="viewMode = $event"></app-toolbar>
             <div class="header-actions">
-                <button class="btn btn--outline" [disabled]="true">
+                <button class="btn btn--outline" [disabled]="true" *ngIf="false">
                     <span class="btn__text">Publish</span>
                 </button>
                 <button class="btn btn--blue" (click)="onSave()">
@@ -50,13 +50,6 @@
                             (visibilityChanged)="toggleVisibility($event)" (orderChangedEvent)="onOrderChanged($event)"
                             (addNewBlockEvent)="setNewBlockMode()">
                         </app-page-editor>
-                        <!-- <app-footer-aside class="left-panel-footer">
-                            <app-actions-dropdown class="fill-row" [up]="true" title="Theme actions"
-                                [items]="themeActions" (actionSelected)="onThemeActionSelected($event)">
-                            </app-actions-dropdown>
-                            <app-history-walker [hasUndo]="hasUndo$|async" [hasRedo]="hasRedo$|async"
-                                (undoClicked)="undo()" (redoClicked)="redo()"></app-history-walker>
-                        </app-footer-aside> -->
                     </ng-container>
                 </app-tab>
                 <app-tab class="tabs__content" tabTitle="Theme" [active]="(activeTabIndex$|async) === 1">
