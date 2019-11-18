@@ -36,9 +36,8 @@ export class RefreshTokenInterceptor implements HttpInterceptor {
                             // case 400:
                             //     return <any>this.authService.logout();
                         }
-                    } else {
-                        return throwError(err);
                     }
+                    return throwError(err);
                 }));
     }
 
