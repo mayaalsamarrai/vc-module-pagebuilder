@@ -10,12 +10,12 @@
         </a>
     </ng-container>
 
-    <div class="list-group-item" *ngIf="noPresets">
-        <div>Theme settings was not loaded</div>
-        <div><button (click)="onReloadData()">Try again</button></div>
+    <div class="left-panel-content" *ngIf="noPresets">
+        <p>Theme settings was not loaded</p>
+        <button (click)="onReloadData()" class="btn btn--blue btn--block">Try again</button>
     </div>
-    <div class="list-group-item" *ngIf="!noPresets && noSchema">
-        <div>Theme schema was not loaded</div>
-        <div><button (click)="onReloadData()">Try again</button></div>
+    <div class="left-panel-content" *ngIf="!noPresets && noSchema">
+        <p>Theme schema was not loaded</p>
+        <button (click)="onReloadData()" class="btn btn--blue btn--block">Try again</button>
     </div>
 </div>
