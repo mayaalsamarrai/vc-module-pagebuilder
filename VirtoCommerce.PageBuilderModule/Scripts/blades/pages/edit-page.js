@@ -132,7 +132,7 @@ angular.module('virtoCommerce.pageBuilderModule')
             function reloadPageAndSave(newFileName, originFileName) {
                 blade.isLoading = true;
                 if (blade.isNew) {
-                    savePage(newFileName);
+                    savePage(newFileName, null);
                     return;
                 }
                 contentApi.get({
@@ -143,7 +143,6 @@ angular.module('virtoCommerce.pageBuilderModule')
                     var page = JSON.parse(data.data);
                     page[0] = $scope.blade.currentEntity.settings;
                     $scope.blade.currentEntity.blocks = page;
-                    $scope.blade.currentEntity.content = JSON.stringify($scope.blade.currentEntity.blocks, null, 4);
                     savePage(newFileName, originFileName);
                 }, function (error) {
                     var dialog = { id: "errorDetails" };
@@ -156,6 +155,7 @@ angular.module('virtoCommerce.pageBuilderModule')
                 $scope.blade.currentEntity.name = originFileName || newFileName;
                 $scope.blade.currentEntity.relativeUrl =
                     ($scope.blade.parentBlade.currentEntity.relativeUrl || '') + '/' + newFileName;
+                $scope.blade.currentEntity.content = JSON.stringify($scope.blade.currentEntity.blocks, null, 4);
                 contentApi.saveMultipartContent({
                         contentType: blade.contentType,
                         storeId: blade.storeId,
@@ -189,7 +189,6 @@ angular.module('virtoCommerce.pageBuilderModule')
                 }
 
                 blade.parentBlade.refresh();
-                blade.refresh();
                 if (blade.isNew) {
                     runDesigner();
                 }
