@@ -276,12 +276,13 @@ export class RootEffects {
             this.rootStore$.select(fromRoot.getPrimaryIsLoaded),
             this.rootStore$.select(fromRoot.getSecondaryIsLoaded),
             this.rootStore$.select(fromRoot.getSecondaryFrameId),
-            this.themeStore$.select(fromTheme.getDraftUploaded)
+            this.themeStore$.select(fromTheme.getDraftUploaded),
+            this.themeStore$.select(fromTheme.getPresetsNotLoaded)
         ),
-        filter(([action, page, primaryLoaded, secondaryLoaded, secondaryFrameId, draftUploaded]) =>
+        filter(([action, page, primaryLoaded, secondaryLoaded, secondaryFrameId, draftUploaded, themeNotLoaded]) =>
             primaryLoaded && secondaryLoaded
             && action.payload === secondaryFrameId
-            && draftUploaded && page != null),
+            && (draftUploaded || themeNotLoaded) && page != null),
         switchMap(([action, page]) => {
             this.preview.page(page.content, action.payload);
             return of(new rootActions.PreviewLoading(true, 'preview ready'));

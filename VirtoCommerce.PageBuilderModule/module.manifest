@@ -34,7 +34,7 @@
   </scripts>
 
   <settings>
-    <group name="General">
+    <group name="CMS Content|General">
       <setting>
         <name>VirtoCommerce.PageBuilderModule.General.StorePreviewPath</name>
         <valueType>string</valueType>
@@ -53,7 +53,7 @@
         <name>VirtoCommerce.PageBuilderModule.General.AssetsPath</name>
         <valueType>string</valueType>
         <defaultValue>assets/pages</defaultValue>
-        <title>AuthToken url</title>
+        <title>Assets relative path</title>
         <description></description>
       </setting>
     </group>

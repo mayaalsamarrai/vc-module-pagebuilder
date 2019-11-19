@@ -15,6 +15,7 @@ angular.module('virtoCommerce.pageBuilderModule')
                     $scope.blade.currentEntity.blocks = [{ type: 'settings', title: '', permalink: '' }];
                     $scope.blade.currentEntity.settings = $scope.blade.currentEntity.blocks[0];
                     $scope.blade.currentEntity.content = JSON.stringify($scope.blade.currentEntity.blocks);
+                    $scope.blade.currentEntity.language = $scope.blade.currentEntity.language;
                 } else {
                     contentApi.get({
                         contentType: blade.contentType,
@@ -43,6 +44,8 @@ angular.module('virtoCommerce.pageBuilderModule')
                 }
 
                 var originFileName = null;
+
+                blade.currentEntity.language = blade.currentEntity.settings.language;
 
                 if (!blade.isNew) {
                     originFileName = blade.origEntity.name;
