@@ -34,7 +34,7 @@
   </scripts>
 
   <settings>
-    <group name="General">
+    <group name="CMS Content|General">
       <setting>
         <name>VirtoCommerce.PageBuilderModule.General.StorePreviewPath</name>
         <valueType>string</valueType>
