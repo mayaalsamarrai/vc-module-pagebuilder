@@ -53,7 +53,7 @@
         <name>VirtoCommerce.PageBuilderModule.General.AssetsPath</name>
         <valueType>string</valueType>
         <defaultValue>assets/pages</defaultValue>
-        <title>AuthToken url</title>
+        <title>Assets relative path</title>
         <description></description>
       </setting>
     </group>

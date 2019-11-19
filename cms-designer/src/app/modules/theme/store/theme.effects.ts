@@ -11,7 +11,8 @@ import {
     debounceTime,
     distinctUntilChanged,
     switchMapTo,
-    tap
+    tap,
+    filter
 } from 'rxjs/operators';
 
 import { MessageService } from '@shared/services';
@@ -51,7 +52,11 @@ export class ThemeEffects {
     @Effect()
     uploadPresets$: Observable<Action> = this.actions$.pipe(
         ofType<themeActions.SaveTheme>(themeActions.ThemeActionTypes.SaveTheme),
-        withLatestFrom(this.store$.select(fromTheme.getPresets)),
+        withLatestFrom(
+            this.store$.select(fromTheme.getPresets),
+            this.store$.select(fromTheme.getPresetsNotLoaded)
+        ),
+        filter(([, , themeNotLoaded]) => !themeNotLoaded),
         switchMap(([, theme]) =>
             this.themeService.uploadPresets(theme).pipe(
                 map(() => new themeActions.SaveThemeSuccess()),
@@ -77,7 +82,11 @@ export class ThemeEffects {
     @Effect()
     updateDraft$: Observable<Action> = this.actions$.pipe(
         ofType(themeActions.ThemeActionTypes.UpdateDraft),
-        withLatestFrom(this.store$.select(fromTheme.getPresets)),
+        withLatestFrom(
+            this.store$.select(fromTheme.getPresets),
+            this.store$.select(fromTheme.getPresetsNotLoaded)
+        ),
+        filter(([, , themeNotLoaded]) => !themeNotLoaded),
         switchMap(([, theme]) =>
             this.themeService.uploadDraft(theme).pipe(
                 map(() => new themeActions.UpdateDraftSuccess()),

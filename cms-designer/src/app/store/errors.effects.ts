@@ -14,14 +14,33 @@ export class ErrorsEffects {
 
     @Effect({ dispatch: false })
     loadBlocksSchemaFail$ = this.actions$.pipe(
-        ofType(
-            editorActions.EditorActionTypes.BlocksSchemaFail,
-            editorActions.EditorActionTypes.LoadPageFail,
-            themeActions.ThemeActionTypes.LoadThemesFail,
-            themeActions.ThemeActionTypes.LoadSchemaFail
-        ),
+        ofType(editorActions.EditorActionTypes.BlocksSchemaFail),
         map((action: any) => <HttpErrorResponse>action.payload),
-        filter(response => response.status >= 400), // server or request error
-        tap(response => this.errors.displayError(response.error.exceptionMessage, response))
+        filter(response => response.status >= 400),
+        tap(response => this.errors.displayError('Couldn\'t load blocks schema', response))
+    );
+
+    @Effect({ dispatch: false })
+    loadPageFail$ = this.actions$.pipe(
+        ofType(editorActions.EditorActionTypes.LoadPageFail),
+        map((action: any) => <HttpErrorResponse>action.payload),
+        filter(response => response.status >= 400),
+        tap(response => this.errors.displayError('Couldn\'t load page', response))
+    );
+
+    @Effect({ dispatch: false })
+    loadThemesFail$ = this.actions$.pipe(
+        ofType(themeActions.ThemeActionTypes.LoadThemesFail),
+        map((action: any) => <HttpErrorResponse>action.payload),
+        filter(response => response.status >= 400),
+        tap(response => this.errors.displayError('Couldn\'t load theme settings', response))
+    );
+
+    @Effect({ dispatch: false })
+    loadThemeSchemaFail$ = this.actions$.pipe(
+        ofType(themeActions.ThemeActionTypes.LoadSchemaFail),
+        map((action: any) => <HttpErrorResponse>action.payload),
+        filter(response => response.status >= 400),
+        tap(response => this.errors.displayError('Couldn\'t load theme schema', response))
     );
 }
