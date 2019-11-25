@@ -123,7 +123,7 @@
     <Content Include="Scripts\blades\pages\page-add.tpl.html" />
     <Content Include="Scripts\blades\pages\pages-list.js" />
     <Content Include="Scripts\VirtoCommerce.PageBuilderModule.js" />
-    <Content Include="Scripts\resources\VirtoCommerce.PageBuilderModuleApi.js" />
+    <Content Include="Scripts\resources\contentApi.js" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
