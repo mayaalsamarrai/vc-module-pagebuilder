@@ -8,7 +8,7 @@ angular.module('virtoCommerce.pageBuilderModule')
 
             blade.initialize = function () {
                 blade.designerUrl = window.location.origin +
-                    (window.location.pahtname === '/' ? '' : window.location.pathname) +
+                    (window.location.pathname === '/' ? '' : window.location.pathname) +
                     '/Modules/VirtoCommerce.PageBuilderModule/Content/builder/';
                 if (blade.isNew) {
                     blade.isLoading = false;
