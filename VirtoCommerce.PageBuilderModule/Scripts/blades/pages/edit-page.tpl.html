@@ -23,7 +23,7 @@
                 <div class="form-group">
                     <label class="form-label">{{ 'content.blades.edit-page.labels.language' | translate }}</label>
                     <div class="form-input">
-                        <ui-select ng-model="blade.currentEntity.settings.language">
+                        <ui-select ng-model="blade.currentEntity.language">
                             <ui-select-match allow-clear placeholder="{{ 'content.blades.edit-page.placeholders.language' | translate }}">{{$select.selected}}</ui-select-match>
                             <ui-select-choices repeat="x in languages">
                                 <span class="flag flag-{{x.substr(3).toLowerCase()}}"></span>

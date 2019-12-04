@@ -1,6 +1,6 @@
 angular.module('virtoCommerce.pageBuilderModule')
-    .controller('virtoCommerce.pageBuilderModule.editPageController', ['$rootScope', '$scope', 'platformWebApp.validators', 'virtoCommerce.contentModule.contentApi', 'platformWebApp.dynamicProperties.api', 'platformWebApp.bladeNavigationService', 'platformWebApp.dialogService', 'platformWebApp.dynamicProperties.dictionaryItemsApi', 'platformWebApp.settings',
-        function ($rootScope, $scope, validators, contentApi, dynamicPropertiesApi, bladeNavigationService, dialogService, dictionaryItemsApi, settings) {
+    .controller('virtoCommerce.pageBuilderModule.editPageController', ['$rootScope', '$scope', 'platformWebApp.validators', 'virtoCommerce.contentModule.contentApi', 'virtoCommerce.pageBuilderModule.contentApi', 'platformWebApp.bladeNavigationService', 'platformWebApp.dialogService', 'platformWebApp.dynamicProperties.dictionaryItemsApi', 'platformWebApp.settings',
+        function ($rootScope, $scope, validators, contentApi, pageBuilderApi, bladeNavigationService, dialogService, dictionaryItemsApi, settings) {
             var blade = $scope.blade;
             blade.updatePermission = 'content:update';
             blade.designerUrl = null;
@@ -8,10 +8,13 @@ angular.module('virtoCommerce.pageBuilderModule')
 
             blade.initialize = function () {
                 blade.designerUrl = window.location.origin +
-                    (window.location.pahtname === '/' ? '' : window.location.pathname) +
+                    (window.location.pathname === '/' ? '' : window.location.pathname) +
                     '/Modules/VirtoCommerce.PageBuilderModule/Content/builder/';
                 if (blade.isNew) {
                     blade.isLoading = false;
+
+                    fillMetadata();
+
                     $scope.blade.currentEntity.blocks = [{ type: 'settings', title: '', permalink: '' }];
                     $scope.blade.currentEntity.settings = $scope.blade.currentEntity.blocks[0];
                     $scope.blade.currentEntity.content = JSON.stringify($scope.blade.currentEntity.blocks);
@@ -24,7 +27,7 @@ angular.module('virtoCommerce.pageBuilderModule')
                     }, function (data) {
                         blade.isLoading = false;
                         blade.currentEntity.content = JSON.parse(data.data);
-
+                        fillMetadata();
                         $scope.blade.currentEntity.blocks = blade.currentEntity.content;
                         $scope.blade.currentEntity.settings = $scope.blade.currentEntity.blocks[0];
                         $scope.blade.currentEntity.content = JSON.stringify($scope.blade.currentEntity.blocks);
@@ -44,8 +47,6 @@ angular.module('virtoCommerce.pageBuilderModule')
                 }
 
                 var originFileName = null;
-
-                blade.currentEntity.language = blade.currentEntity.settings.language;
 
                 if (!blade.isNew) {
                     originFileName = blade.origEntity.name;
@@ -101,6 +102,18 @@ angular.module('virtoCommerce.pageBuilderModule')
             }
 
             blade.toolbarCommands = blade.toolbarCommands || [];
+
+            function fillMetadata() {
+                var blobName = blade.currentEntity.name || '';
+                var idx = blobName.lastIndexOf('.');
+                if (idx >= 0) {
+                    blobName = blobName.substring(0, idx);
+                    idx = blobName.lastIndexOf('.'); // language
+                    if (idx >= 0) {
+                        blade.currentEntity.language = blobName.substring(idx + 1);
+                    }
+                }
+            }
 
             function isDirty() {
                 return !angular.equals(blade.currentEntity, blade.origEntity) && blade.hasUpdatePermission();
@@ -159,7 +172,7 @@ angular.module('virtoCommerce.pageBuilderModule')
                 $scope.blade.currentEntity.relativeUrl =
                     ($scope.blade.parentBlade.currentEntity.relativeUrl || '') + '/' + newFileName;
                 $scope.blade.currentEntity.content = JSON.stringify($scope.blade.currentEntity.blocks, null, 4);
-                contentApi.saveMultipartContent({
+                pageBuilderApi.savePage({
                         contentType: blade.contentType,
                         storeId: blade.storeId,
                         folderUrl: blade.folderUrl || ''
