@@ -173,7 +173,9 @@
     <PreBuildEvent>cd $(ProjectDir)\..\cms-designer
 call npm i 
 call npm run build
-</PreBuildEvent>
+cd $(ProjectDir)\..\store
+call npm i
+call npm run build:prod</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PostBuildEvent>
