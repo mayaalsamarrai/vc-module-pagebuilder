@@ -1,6 +1,9 @@
-import { ThemeActionTypes, ThemeActions } from './theme.actions';
+import { createReducer, on } from '@ngrx/store';
+
 import { PresetsModel } from '@themes/models';
 import { BlockSchema, ValueType } from '@shared/models';
+
+import * as Actions from './theme.actions';
 
 export interface ThemeState {
     schemaLoading: boolean;
@@ -36,77 +39,36 @@ export const initialState: ThemeState = {
     dirty: false
 };
 
+const themesReducer = createReducer(
+    initialState,
+    on(Actions.loadSchema, state => ({ ...state, schemaLoading: true })),
+    on(Actions.loadSchemaSuccess, (state, { schema }) => ({ ...state, schema, schemaLoading: false, schemaNotLoaded: false })),
+    on(Actions.loadSchemaFail, (state) => ({ ...state, schemaLoading: false, schemaNotLoaded: true })),
+    on(Actions.saveTheme, state => ({ ...state, presets: { ...state.presets, current: { ...state.editableTheme } } })),
+    on(Actions.saveThemeSuccess, state => ({ ...state, initialPresets: JSON.stringify(state.presets), dirty: false })),
+    on(Actions.loadThemes, state => ({ ...state, presetsLoading: true })),
+    on(Actions.loadThemesSuccess, (state, { presets }) => {
+        const newPresets = { ...presets };
+        if (typeof presets.current === 'string') {
+            newPresets.current = { ...presets.presets[presets.current] };
+        }
+        return {
+            ...state,
+            editableTheme: { ...<any>newPresets.current },
+            initialPresets: JSON.stringify(presets),
+            presets: newPresets,
+            presetsLoading: false,
+            presetsNotLoaded: false
+        };
+    }),
+    on(Actions.loadThemesFail, state => ({ ...state, presetsLoading: false, presetsNotLoaded: true })),
+    on(Actions.selectSchemaItem, (state, { item }) => ({...state, selectedSchemaItem: item })),
+    on(Actions.showPresetsPane, state => ({...state, showPresetsPane: true})),
+    on(Actions.closeEditors, state => )
+);
+
 export function reducer(state = initialState, action: ThemeActions): ThemeState {
     switch (action.type) {
-        case ThemeActionTypes.LoadSchema:
-            return {
-                ...state,
-                schemaLoading: true
-            };
-        case ThemeActionTypes.LoadSchemaSuccess:
-            return {
-                ...state,
-                schema: action.payload,
-                schemaLoading: false,
-                schemaNotLoaded: false
-            };
-        case ThemeActionTypes.LoadSchemaFail:
-            return {
-                ...state,
-                schemaLoading: false,
-                schemaNotLoaded: true
-            };
-        case ThemeActionTypes.SaveTheme: {
-            const newPreset = { ...state.presets };
-            newPreset.current = { ...state.editableTheme };
-            return {
-                ...state,
-                presets: newPreset
-            };
-        }
-        case ThemeActionTypes.SaveThemeSuccess: {
-            return {
-                ...state,
-                initialPresets: JSON.stringify(state.presets),
-                dirty: false
-            };
-        }
-        case ThemeActionTypes.LoadThemes: {
-            return {
-                ...state,
-                presetsLoading: true
-            };
-        }
-        case ThemeActionTypes.LoadThemesSuccess: {
-            const newPresets = action.payload;
-            if (typeof action.payload.current === 'string') {
-                newPresets.current = { ...action.payload.presets[action.payload.current] };
-            }
-            return {
-                ...state,
-                editableTheme: { ...<any>newPresets.current },
-                initialPresets: JSON.stringify(action.payload),
-                presets: newPresets,
-                presetsLoading: false,
-                presetsNotLoaded: false
-            };
-        }
-        case ThemeActionTypes.LoadThemesFail:
-            return {
-                ...state,
-                presetsLoading: false,
-                presetsNotLoaded: true
-            };
-        case ThemeActionTypes.SelectSchemaItem:
-            return {
-                ...state,
-                selectedSchemaItem: action.payload
-            };
-        case ThemeActionTypes.ShowPresetsPane:
-            return {
-                ...state,
-                showPresetsEditor: true
-            };
         case ThemeActionTypes.CloseEditors:
         case ThemeActionTypes.CancelPreset: {
             const newPresets = { ...state.presets };
