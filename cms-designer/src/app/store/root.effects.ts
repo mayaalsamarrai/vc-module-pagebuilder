@@ -32,7 +32,7 @@ export class RootEffects {
         ofType(rootActions.resetData),
         switchMapTo([
             editorActions.clearPageChanges(),
-            new themeActions.ClearThemeChanges()
+            themeActions.clearThemeChanges()
         ])
     ));
 
@@ -40,7 +40,7 @@ export class RootEffects {
         ofType(rootActions.closeEditors),
         switchMapTo([
             editorActions.closeEditors(),
-            new themeActions.CloseEditors()
+            themeActions.closeEditors()
         ])
     ));
 
@@ -71,7 +71,7 @@ export class RootEffects {
             this.themeStore$.select(fromTheme.getPresetsNotLoaded)
         ),
         filter(([, presets, presetsNotLoaded]) => !presets || presetsNotLoaded),
-        mapTo(new themeActions.LoadThemes())
+        mapTo(themeActions.loadThemes())
     ));
 
     switchToLoadThemeSchema$ = createEffect(() => this.actions$.pipe(
@@ -81,14 +81,14 @@ export class RootEffects {
             this.themeStore$.select(fromTheme.getSchemaNotLoaded)
         ),
         filter(([, schema, schemaNotLoaded]) => !schema || schemaNotLoaded),
-        mapTo(new themeActions.LoadSchema())
+        mapTo(themeActions.loadSchema())
     ));
 
     saveData$ = createEffect(() => this.actions$.pipe(
         ofType(rootActions.saveData),
         switchMapTo([
             editorActions.savePage(),
-            new themeActions.SaveTheme()
+            themeActions.saveTheme()
         ])
     ));
 
@@ -123,9 +123,8 @@ export class RootEffects {
 
     // themes
 
-    @Effect()
-    uploadPreviewPreset$ = this.actions$.pipe(
-        ofType(themeActions.ThemeActionTypes.UpdateDraftSuccess),
+    uploadPreviewPreset$ = createEffect(() => this.actions$.pipe(
+        ofType(themeActions.updateDraftSuccess),
         withLatestFrom(
             this.rootStore$.select(fromRoot.getSecondaryFrameId),
             this.rootStore$.select(fromRoot.getSecondaryIsLoaded)
@@ -136,7 +135,7 @@ export class RootEffects {
             }
             return of(rootActions.previewLoading({ isLoading: true, msg: 'update draft success' }));
         })
-    );
+    ));
 
     // editor
 
@@ -307,16 +306,7 @@ export class RootEffects {
         }),
     ));
 
-    // @Effect()
-    // scriptInPreviewLoaded$ = fromEvent(window, 'message').pipe(
-    //     filter((event: MessageEvent) => event.data.type === 'ping'), // first event
-    //     map(event => {
-    //         return new rootActions.PreviewReady(event.srcElement.id);
-    //     }),
-    // );
-
-    @Effect()
-    receiveSwapFrameMessage$ = fromEvent(window, 'message').pipe(
+    receiveSwapFrameMessage$ = createEffect(() => fromEvent(window, 'message').pipe(
         filter((event: MessageEvent) => event.data.type === 'render-complete'),
         withLatestFrom(
             this.rootStore$.select(fromRoot.getPrimaryFrameId),
@@ -333,16 +323,15 @@ export class RootEffects {
             rootActions.toggleFrames({ frameId: loadedFrameId }),
             rootActions.previewLoading({ isLoading: false, msg: 'swap frames' })
         ])
-    );
+    ));
 
-    @Effect()
-    receiveSwapBlocksMessage$ = fromEvent(window, 'message').pipe(
+    receiveSwapBlocksMessage$ = createEffect(() => fromEvent(window, 'message').pipe(
         filter((event: MessageEvent) => event.data.type === 'swap'),
         map(event => editorActions.swapBlocks({
             currentIndex: event.data.content.newIndex,
             previousIndex: event.data.content.currentIndex
         }))
-    );
+    ));
 
     receiveHoverElementMessage$ = createEffect(() => fromEvent(window, 'message').pipe(
         filter((event: MessageEvent) => event.data.type === 'hover'),

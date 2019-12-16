@@ -26,19 +26,17 @@ export class ErrorsEffects {
         tap(response => this.errors.displayError('Couldn\'t load page', response))
     ), { dispatch: false });
 
-    @Effect({ dispatch: false })
-    loadThemesFail$ = this.actions$.pipe(
-        ofType(themeActions.ThemeActionTypes.LoadThemesFail),
+    loadThemesFail$ = createEffect(() => this.actions$.pipe(
+        ofType(themeActions.loadThemesFail),
         map((action: any) => <HttpErrorResponse>action.payload),
         filter(response => response.status >= 400),
         tap(response => this.errors.displayError('Couldn\'t load theme settings', response))
-    );
+    ), { dispatch: false });
 
-    @Effect({ dispatch: false })
-    loadThemeSchemaFail$ = this.actions$.pipe(
-        ofType(themeActions.ThemeActionTypes.LoadSchemaFail),
-        map((action: any) => <HttpErrorResponse>action.payload),
+    loadThemeSchemaFail$ = createEffect(() => this.actions$.pipe(
+        ofType(themeActions.loadSchemaFail),
+        map((action: any) => <HttpErrorResponse>action.error),
         filter(response => response.status >= 400),
         tap(response => this.errors.displayError('Couldn\'t load theme schema', response))
-    );
+    ), { dispatch: false });
 }

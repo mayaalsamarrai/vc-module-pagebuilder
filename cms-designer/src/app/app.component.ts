@@ -178,7 +178,7 @@ export class AppComponent implements OnInit {
     // theme tab events
 
     turnOnPresets() {
-        this.store.dispatch(new themeActions.ShowPresetsPane());
+        this.store.dispatch(themeActions.showPresetsPane());
     }
 
     reloadThemeData() {
@@ -186,30 +186,30 @@ export class AppComponent implements OnInit {
     }
 
     selectSchemaItem(item: BlockSchema) {
-        this.store.dispatch(new themeActions.SelectSchemaItem(item));
+        this.store.dispatch(themeActions.selectSchemaItem({ item }));
     }
 
     // presets pane events
 
-    onSavePreset(name: string) {
-        this.store.dispatch(new themeActions.CreatePreset(name));
+    onSavePreset(preset: string) {
+        this.store.dispatch(themeActions.createPreset({ preset }));
     }
 
-    onSelectPreset(name: string) {
-        this.store.dispatch(new themeActions.SelectPreset(name));
+    onSelectPreset(preset: string) {
+        this.store.dispatch(themeActions.selectPreset({ preset }));
     }
 
-    applyPresetAsTheme(name: string) {
-        this.store.dispatch(new themeActions.ApplyPreset(name));
+    applyPresetAsTheme(preset: string) {
+        this.store.dispatch(themeActions.applyPreset({ preset }));
     }
 
-    onRemovePreset(name: string) {
-        this.store.dispatch(new themeActions.RemovePreset(name));
+    onRemovePreset(preset: string) {
+        this.store.dispatch(themeActions.removePreset({ preset }));
     }
 
     // theme editor pane events
 
-    liveUpdateTheme(themeValues: { [key: string]: string | number | boolean }) {
-        this.store.dispatch(new themeActions.UpdateTheme(themeValues));
+    liveUpdateTheme(values: { [key: string]: string | number | boolean }) {
+        this.store.dispatch(themeActions.updateTheme({ values }));
     }
 }
