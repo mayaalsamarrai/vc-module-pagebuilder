@@ -43,7 +43,7 @@ const themesReducer = createReducer(
     initialState,
     on(Actions.loadSchema, state => ({ ...state, schemaLoading: true })),
     on(Actions.loadSchemaSuccess, (state, { schema }) => ({ ...state, schema, schemaLoading: false, schemaNotLoaded: false })),
-    on(Actions.loadSchemaFail, (state) => ({ ...state, schemaLoading: false, schemaNotLoaded: true })),
+    on(Actions.loadSchemaFail, (state) => ({ ...state, schemaLoading: false, schemaNotLoaded: true, schema: null })),
     on(Actions.saveTheme, state => ({ ...state, presets: { ...state.presets, current: { ...state.editableTheme } } })),
     on(Actions.saveThemeSuccess, state => ({ ...state, initialPresets: JSON.stringify(state.presets), dirty: false })),
     on(Actions.loadThemes, state => ({ ...state, presetsLoading: true })),
@@ -63,7 +63,7 @@ const themesReducer = createReducer(
     }),
     on(Actions.loadThemesFail, state => ({ ...state, presetsLoading: false, presetsNotLoaded: true })),
     on(Actions.selectSchemaItem, (state, { item }) => ({ ...state, selectedSchemaItem: item })),
-    on(Actions.showPresetsPane, state => ({ ...state, showPresetsPane: true })),
+    on(Actions.showPresetsPane, state => ({ ...state, showPresetsEditor: true })),
     on(Actions.closeEditors, Actions.cancelPreset, state => ({
         ...state,
         presets: {
