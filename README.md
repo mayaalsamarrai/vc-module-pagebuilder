@@ -4,32 +4,34 @@
 
 The Pagebuilder allows creating static pages from blocks and editing them using a visual editor.
 
-Each page consists of different blocks. The blocks view and settings depend on web page requirements.
+Each page consists of several different blocks. The blocks view and settings depend on web page requirements.
 
 The page is created in the builder as a list of blocks with specific settings applied to each block. All data are saved in a Json file format.
 
 ## Subsystem component description
 
-The builder is consisted of two subsystems:
+The builder is consisted of two main subsystems:
 
 1. Script with Preview creation logics;
 1. Script with Preview visualization logics.
 
-The Builder runs on admin side so that it can receive data and save changes made during editing of pages and themes.
+The Builder runs on admin side so that it can receive data from VC platform and save changes made during editing of pages and themes.
 
-The Preview script runs on Storefront, as only Storefront knows which templates should be used to generate the html.
+The Preview script runs on Storefront, as only Storefront 'knows' which templates should be used to generate the html.
 
 The scripts 'communicate' with each other via messages- [`window.postMessage()`]
 
 (https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage)
 
-![page builder image demo](https://github.com/VirtoCommerce/vc-module-pagebuilder/blob/dev/page-builder-demo.gif?raw=true)
+### Interaction of Pagebuilder Module parts diagram
 
 ![Diagram](docs/media/screen-page-builder-1.png)
 
 ## Pagebuilder Interface part
 
 ### Add New Page
+
+In order to add a new page, the user should go through the following steps:
 
 1. Go to More > Content module > select a Store and click on Pages widget;
 1. On 'Pages list' blade select 'Add' to add a new page;
@@ -44,12 +46,12 @@ The scripts 'communicate' with each other via messages- [`window.postMessage()`]
    1. Permalink;
    1. Page metatitle (optional);
    1. Page meta description (optional)
-1. Click 'Create' button
+1. Click 'Create' button;
 1. The new page will be created.
 
-### Edit New Page
+### Edit Page
 
-1. Select the new page from the list;
+1. Select the page file from the list of pages;
 1. Click 'Open in Designer';
 1. The system opens the Pagebuilder that consists of:
 
@@ -67,6 +69,8 @@ The scripts 'communicate' with each other via messages- [`window.postMessage()`]
 1. Once the blocs are edited, click the 'Save' button to save the changes made;
 1. Click on the icons above the blocks in the 'Preview' area to view different screen resolutions;
 ![Screen Resolutions](docs/media/screen-resolutions.png)
+
+![page builder image demo](https://github.com/VirtoCommerce/vc-module-pagebuilder/blob/dev/page-builder-demo.gif?raw=true)
 
 ### Page Preview
 
@@ -122,13 +126,11 @@ The builder is run as follows:
 ``` 
 npm run build:prod
 ```
-For debugging (map file should be created)
+For debugging purposes a map file should be created.
 
 ``` 
 npm run build
 ```
-
-## Settings
 
 ## License
 
