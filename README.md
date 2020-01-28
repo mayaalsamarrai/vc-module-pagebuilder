@@ -27,7 +27,7 @@ The scripts 'communicate' with each other via messages- [`window.postMessage()`]
 
 ![Diagram](docs/media/screen-page-builder-1.png)
 
-## Pagebuilder Interface part
+## Pagebuilder Interface Part
 
 ### Add New Page
 
@@ -69,7 +69,11 @@ In order to add a new page, the user should go through the following steps:
 1. Once the blocs are edited, click the 'Save' button to save the changes made;
 1. Click on the icons above the blocks in the 'Preview' area to view different screen resolutions;
 ![Screen Resolutions](docs/media/screen-resolutions.png)
+1. Select the 'Theme' section in the Editor to edit different theme parameters.
 
+![Edit theme](docs/media/screen-edit-theme.png)
+
+### Add and Edit Page Demo
 ![page builder image demo](https://github.com/VirtoCommerce/vc-module-pagebuilder/blob/dev/page-builder-demo.gif?raw=true)
 
 ### Page Preview
