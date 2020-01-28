@@ -23,7 +23,7 @@ The scripts 'communicate' with each other via messages- [`window.postMessage()`]
 
 (https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage)
 
-### Interaction of Pagebuilder Module parts diagram
+### Interaction of Pagebuilder Module Parts Diagram
 
 ![Diagram](docs/media/screen-page-builder-1.png)
 
