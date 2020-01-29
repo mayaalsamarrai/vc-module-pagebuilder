@@ -12,16 +12,14 @@ The page is created in the builder as a list of blocks with specific settings ap
 
 The builder is consisted of two main subsystems:
 
-1. Script with Preview creation logics;
+1. Script with Creating logics;
 1. Script with Preview visualization logics.
 
 The Builder runs on admin side so that it can receive data from VC platform and save changes made during editing of pages and themes.
 
 The Preview script runs on Storefront, as only Storefront 'knows' which templates should be used to generate the html.
 
-The scripts 'communicate' with each other via messages- [`window.postMessage()`]
-
-(https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage)
+The scripts 'communicate' with each other via messages- [`window.postMessage()`](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage)
 
 ### Interaction of Pagebuilder Module Parts Diagram
 
@@ -80,7 +78,7 @@ In order to add a new page, the user should go through the following steps:
 
 1. Open Content module > select Store > clicks on Pages widget > select the page and click on 'Preview page' icon
 ![Preview](docs/media/screen-preview-page.png)
-1. The system will display the page in Preview format with no possibility to edit the page.
+1. The system will display the page in Storefront with no possibility to edit the page.
 ![Preview on storefront](docs/media/screen-preview-on-store.png)
 
 ## Installation
@@ -122,7 +120,7 @@ The builder is run as follows:
 
      ``` 
 
-     npm run serve
+     npm run build
 
      ``` 
 1. The second part of the app is a script that allows page preview and starts on Storefront side. This script is located in ./store folder.
