@@ -114,13 +114,13 @@ The builder is run as follows:
 
    1. For production:
      ```
-     npm run serve
+     npm run build
      ```
     1. For development:
 
      ``` 
 
-     npm run build
+     npm run serve
 
      ``` 
 1. The second part of the app is a script that allows page preview and starts on Storefront side. This script is located in ./store folder.
