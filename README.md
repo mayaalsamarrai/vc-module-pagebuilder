@@ -99,7 +99,11 @@ In order to add a new page, the user should go through the following steps:
 
 ### Assets relative path
 
-Relative URL in store used to preview blocks in PageBuilder
+Path in file storage where images will be uploaded
+
+### Store Preview Path
+
+Relative url in store to preview blocks in page builder
 
 ### AutoToken URL
 
