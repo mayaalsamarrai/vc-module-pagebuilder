@@ -47,6 +47,7 @@ In order to add a new page, the user should go through the following steps:
 1. Click 'Create' button;
 1. The new page will be created.
 
+![Filled fields](docs/media/screen-fields-filled.png)
 ### Edit Page
 
 1. Select the page file from the list of pages;
