@@ -44,7 +44,8 @@ In order to add a new page, the user should go through the following steps:
    1. Permalink;
    1. Page metatitle (optional);
    1. Page meta description (optional)
-   ![Filled fields](docs/media/screen-fields-filled.png)
+ ![Filled fields](docs/media/screen-fields-filled.png)
+
 1. Click 'Create' button;
 1. The new page will be created.
 
