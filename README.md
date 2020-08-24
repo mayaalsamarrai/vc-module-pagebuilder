@@ -18,8 +18,9 @@ The page is created in the builder as a list of blocks with specific settings ap
 
 ## Documentation
 
-[Pagebuilder Document](/docs/index.md)
-[View on GitHub](https://github.com/VirtoCommerce/vc-module-pagebuilder/tree/dev)
+* [Pagebuilder Document](/docs/index.md)
+
+* [View on GitHub](https://github.com/VirtoCommerce/vc-module-pagebuilder/tree/dev)
 
 ## References
 
